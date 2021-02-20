@@ -20,14 +20,14 @@
       <inventoryverbs type="stringlist" />
       <displayverbs type="stringlist" />
       <isroom />
+      <description>Wrapped with a bow</description>
+      <visible />
       <beforeenter type="script">
         =
       </beforeenter>
       <enter type="script">
         MakeObjectInvisible
       </enter>
-      <description>Wrapped with a bow</description>
-      <visible />
       <speak type="script">
         if (this.visited = False) {
           msg ("Good morning! Here's a present.")
@@ -44,17 +44,17 @@
         <value>Open it</value>
       </displayverbs>
       <inventoryverbs type="stringlist" />
+      <attr name="feature_usegive" type="boolean">false</attr>
+      <attr name="feature_startscript" type="boolean">false</attr>
+      <usestandardverblist />
       <openit type="script">
         msg ("It contains an old graduation cap")
         create exit ("graduation", Kitchen 2021, Graduation 2021)
-        ShowRoomDescription()
+        ShowRoomDescription
         MakeObjectInvisible (gift)
       </openit>
-      <attr name="feature_usegive" type="boolean">false</attr>
-      <attr name="feature_startscript" type="boolean">false</attr>
       <attr name="_initialise_" type="script">
       </attr>
-      <usestandardverblist />
     </object>
   </object>
   <verb>
@@ -70,6 +70,91 @@
   <object name="Bedroom 2021">
     <inherit name="editor_room" />
     <alias>Bedroom</alias>
+    <exit alias="Head downstairs" to="Kitchen 2021" />
+  </object>
+  <object name="Graduation 2021">
+    <inherit name="editor_room" />
+    <alias>Graduation ceremony</alias>
+  </object>
+  <object name="Bedroom 1979">
+    <inherit name="editor_room" />
+    <alias>Bedroom</alias>
+    <description type="string"></description>
+    <firstenter type="script">
+      msg ("You had an awesome time at the party, now its getting late and it's time for bed... This room is oddly familiar, because as you know your mom used to live in your room when she was younger...")
+    </firstenter>
+    <object name="game_console">
+      <inherit name="container_open" />
+      <inherit name="editor_object" />
+      <visible type="boolean">false</visible>
+      <displayverbs type="stringlist">
+        <value>Inspect</value>
+        <value>Play</value>
+      </displayverbs>
+      <attr name="feature_container" type="boolean">false</attr>
+      <inventoryverbs type="stringlist">
+        <value>Look at</value>
+        <value>Use</value>
+        <value>Drop</value>
+      </inventoryverbs>
+      <isroom type="boolean">false</isroom>
+      <scenery type="boolean">false</scenery>
+      <look>A nightstand.</look>
+      <alias>Game Console</alias>
+      <inspect type="script">
+        if (Got(Cartridge 2021)) {
+          msg ("This is an old game console, maybe you should try playing it with your new game...")
+        }
+        else {
+          msg ("This is an old game console, there is no game cartridge inserted, maybe you should look around for one...")
+        }
+        this.visited = true
+        ShowRoomDescription()
+      </inspect>
+      <play type="script">
+        if (Got(Cartridge 2021)) {
+          msg ("You insert the cartridge and the game loads... after pressing play you suddenly get dizzy again, much like at graduation. Once you finally steady yourself and look around you realize you aren't in the bedroom anymore...")
+          RemoveObject (Cartridge 2021)
+          MoveObject (player, Graduation 2021 post game)
+        }
+        else {
+          msg ("There is no game cartridge inserted... you cannot play without a cartridge...")
+        }
+      </play>
+    </object>
+    <object name="Nightstand">
+      <inherit name="editor_object" />
+      <visible type="boolean">false</visible>
+      <displayverbs type="stringlist">
+        <value>Open drawer</value>
+      </displayverbs>
+      <opendrawer type="script">
+        if (game_console.visited = True) {
+          MakeObjectVisible (Cartridge 2021)
+          msg ("You see a game cartridge for \"2021\", which you didn't notice before... maybe you should investigate further")
+          ShowRoomDescription()
+        }
+        else {
+          msg ("You aren't sure what you are looking for here... maybe check around the room for some more information")
+        }
+      </opendrawer>
+      <attr name="feature_container" type="boolean">false</attr>
+      <close type="boolean">false</close>
+      <onopen type="script">
+        MakeObjectVisible (Cartridge 2021)
+      </onopen>
+    </object>
+    <object name="Desk">
+      <inherit name="editor_object" />
+      <visible type="boolean">false</visible>
+      <displayverbs type="stringlist">
+        <value>Search</value>
+      </displayverbs>
+      <search type="script">
+        msg ("You see school notes and various polaroid photos of your mom and her friends throughout high school... You don't feel like any of this will be useful to entertain yourself...")
+        ShowRoomDescription()
+      </search>
+    </object>
     <object name="player">
       <inherit name="editor_object" />
       <inherit name="editor_player" />
@@ -78,10 +163,96 @@
       <attr name="changedtalked_to_mom" type="script">
       </attr>
     </object>
-    <exit alias="Head downstairs" to="Kitchen 2021" />
+    <object name="Bed">
+      <inherit name="editor_object" />
+      <usestandardverblist type="boolean">false</usestandardverblist>
+      <displayverbs type="stringlist">
+        <value>Sleep</value>
+      </displayverbs>
+      <sleep type="script">
+        msg ("You had one too many energy drinks at the party... you should find something to do until you are tired enough to sleep...")
+        MakeObjectVisible (Desk)
+        MakeObjectVisible (Nightstand)
+        MakeObjectVisible (game_console)
+        MakeObjectInvisible (Bed)
+        MakeObjectVisible (TV)
+        MakeObjectVisible (Window)
+        MakeObjectVisible (Mirror)
+        ShowRoomDescription()
+      </sleep>
+    </object>
+    <object name="Cartridge 2021">
+      <inherit name="editor_object" />
+      <visible type="boolean">false</visible>
+      <displayverbs type="stringlist">
+        <value>Take</value>
+      </displayverbs>
+      <take />
+      <takemsg>you grab the game cartridge... maybe you should play it</takemsg>
+      <drop type="boolean">false</drop>
+      <inventoryverbs type="stringlist">
+        <value>Look at</value>
+      </inventoryverbs>
+      <look>You have never heard of this game before... maybe you should take it to the Game Console and try to play it?</look>
+    </object>
+    <object name="TV">
+      <inherit name="editor_object" />
+      <visible type="boolean">false</visible>
+      <displayverbs type="stringlist">
+        <value>Look at</value>
+      </displayverbs>
+      <look><![CDATA[You are surprised that your mom had her own TV in 1979...<br/>This is small and you have no idea how to do anything except turn it on...<br/>It looks like the {object:game_console} is connected to it already though...]]></look>
+    </object>
+    <object name="Mirror">
+      <inherit name="editor_object" />
+      <visible type="boolean">false</visible>
+      <displayverbs type="stringlist">
+        <value>Look at</value>
+      </displayverbs>
+      <look>You see your mom looking back at you in the mirror... it's an interesting experience and you feel like you should avoid looking at yourself as your young mom...</look>
+    </object>
+    <object name="Window">
+      <inherit name="editor_object" />
+      <visible type="boolean">false</visible>
+      <look><![CDATA[You look out the window... <br/>It's dark already but you can see the  familiar but different street you grew up on... the trees seem freshly planted and the street lights are different... <br/>but it's definitely the same street you grew up on]]></look>
+      <displayverbs type="stringlist">
+        <value>Look at</value>
+      </displayverbs>
+    </object>
   </object>
-  <object name="Graduation 2021">
+  <verb>
+    <property>sleep</property>
+    <pattern>sleep</pattern>
+    <defaultexpression>"You can't sleep " + object.article + "."</defaultexpression>
+  </verb>
+  <verb>
+    <property>opendrawer</property>
+    <pattern>open drawer</pattern>
+    <defaultexpression>"You can't open drawer " + object.article + "."</defaultexpression>
+  </verb>
+  <verb>
+    <property>inspect</property>
+    <pattern>inspect</pattern>
+    <defaultexpression>"You can't inspect " + object.article + "."</defaultexpression>
+  </verb>
+  <verb>
+    <property>play</property>
+    <pattern>play</pattern>
+    <defaultexpression>"You can't play " + object.article + "."</defaultexpression>
+  </verb>
+  <object name="Graduation 2021 post game">
     <inherit name="editor_room" />
-    <alias>Graduation ceremony</alias>
+    <alias>Graduation</alias>
+    <descprefix>You are at</descprefix>
+    <usedefaultprefix type="boolean">false</usedefaultprefix>
+    <object name="mom_postgrad">
+      <inherit name="editor_object" />
+      <alias>mom</alias>
+      <displayverbs type="stringlist" />
+      <speak type="script"><![CDATA[
+        msg ("Mom: \"Terri! I can't believe you are finally done with high school!<br/>Did my graduation cap give you good luck like I said it would?\"<br/><br/>You wish you could explain what the cap did without sounding crazy...")
+        finish
+      ]]></speak>
+    </object>
   </object>
 </asl>
