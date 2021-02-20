@@ -60,8 +60,16 @@
       </item>
     </options>
   </object>
-  <object name="flip tassel" />
+  <object name="flip tassel">
+    <options type="stringdictionary">
+      <item>
+        <key>test page</key>
+        <value>test option</value>
+      </item>
+    </options>
+  </object>
   <object name="Graduation 1979 unf">
     <description>graduation 1979</description>
   </object>
+  <object name="test page" />
 </asl>
