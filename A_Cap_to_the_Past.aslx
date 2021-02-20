@@ -1,0 +1,64 @@
+<!--Saved by Quest 5.8.6836.13983-->
+<asl version="580">
+  <include ref="GamebookCore.aslx" />
+  <game name="A Cap to the Past">
+    <gameid>818cf859-6629-46bd-942b-1f18c4591bed</gameid>
+    <version>1.0</version>
+    <firstpublished>2021</firstpublished>
+    <author>Tyler Pelton and Daniel Weidman</author>
+    <category>Puzzle</category>
+  </game>
+  <object name="Bedroom 2021 unf">
+    <description>You wake up in your bed on graduation day. </description>
+    <options type="stringdictionary">
+      <item>
+        <key>Kitchen 2021 unf</key>
+        <value>go downstairs</value>
+      </item>
+    </options>
+    <object name="player">
+      <inherit name="defaultplayer" />
+    </object>
+  </object>
+  <object name="Kitchen 2021 unf">
+    <description><![CDATA[You arrive downstairs in kitchen, wrapped gift on table.<br/>]]></description>
+    <options type="stringdictionary">
+      <item>
+        <key>unwrapped gift</key>
+        <value>Unwrap gift</value>
+      </item>
+      <item>
+        <key>refuse to unwrap</key>
+        <value>Refuse gift</value>
+      </item>
+    </options>
+  </object>
+  <object name="unwrapped gift">
+    <description><![CDATA[its a graduation cap<br/>Mom: "..."]]></description>
+    <options type="stringdictionary">
+      <item>
+        <key>Graduation 2021 unf</key>
+        <value>Head to graduation</value>
+      </item>
+    </options>
+  </object>
+  <object name="refuse to unwrap">
+    <options type="stringdictionary">
+      <item>
+        <key>unwrapped gift</key>
+        <value>Unwrap gift</value>
+      </item>
+    </options>
+    <description>mom insists you unwrap</description>
+  </object>
+  <object name="Graduation 2021 unf">
+    <description>Its your graduation ceremony</description>
+    <options type="stringdictionary">
+      <item>
+        <key>flip tassel</key>
+        <value>Flip tassel</value>
+      </item>
+    </options>
+  </object>
+  <object name="flip tassel" />
+</asl>
