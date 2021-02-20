@@ -6,13 +6,82 @@
     <gameid>387c2b10-4356-4f72-bf07-fff359f22da4</gameid>
     <version>1.0</version>
     <firstpublished>2021</firstpublished>
+    <start type="script">
+      msg ("You wake up...")
+    </start>
   </game>
-  <object name="room">
+  <object name="Kitchen 2021">
     <inherit name="editor_room" />
     <isroom />
+    <description>Big kitchen with a stove and microwave</description>
+    <alias>Kitchen</alias>
+    <object name="mom">
+      <inherit name="editor_object" />
+      <inventoryverbs type="stringlist" />
+      <displayverbs type="stringlist" />
+      <isroom />
+      <beforeenter type="script">
+        =
+      </beforeenter>
+      <enter type="script">
+        MakeObjectInvisible
+      </enter>
+      <description>Wrapped with a bow</description>
+      <visible />
+      <speak type="script">
+        if (this.visited = False) {
+          msg ("Good morning! Here's a present.")
+          MakeObjectVisible (gift)
+          ShowRoomDescription
+          this.visited = true
+        }
+      </speak>
+    </object>
+    <object name="gift">
+      <inherit name="editor_object" />
+      <visible type="boolean">false</visible>
+      <displayverbs type="stringlist">
+        <value>Open it</value>
+      </displayverbs>
+      <inventoryverbs type="stringlist" />
+      <openit type="script">
+        msg ("It contains an old graduation cap")
+        create exit ("graduation", Kitchen 2021, Graduation 2021)
+        ShowRoomDescription()
+        MakeObjectInvisible (gift)
+      </openit>
+      <attr name="feature_usegive" type="boolean">false</attr>
+      <attr name="feature_startscript" type="boolean">false</attr>
+      <attr name="_initialise_" type="script">
+      </attr>
+      <usestandardverblist />
+    </object>
+  </object>
+  <verb>
+    <property>talked_to</property>
+    <pattern>talked_to</pattern>
+    <defaultexpression>"You can't talked_to " + object.article + "."</defaultexpression>
+  </verb>
+  <verb>
+    <property>openit</property>
+    <pattern>open it</pattern>
+    <defaultexpression>"You can't open it " + object.article + "."</defaultexpression>
+  </verb>
+  <object name="Bedroom 2021">
+    <inherit name="editor_room" />
+    <alias>Bedroom</alias>
     <object name="player">
       <inherit name="editor_object" />
       <inherit name="editor_player" />
+      <statusattributes type="stringdictionary" />
+      <attr name="talked_to_mom" type="string"></attr>
+      <attr name="changedtalked_to_mom" type="script">
+      </attr>
     </object>
+    <exit alias="Head downstairs" to="Kitchen 2021" />
+  </object>
+  <object name="Graduation 2021">
+    <inherit name="editor_room" />
+    <alias>Graduation ceremony</alias>
   </object>
 </asl>
