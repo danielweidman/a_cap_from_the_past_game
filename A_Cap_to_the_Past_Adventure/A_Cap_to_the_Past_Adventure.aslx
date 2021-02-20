@@ -122,28 +122,6 @@
         }
       </play>
     </object>
-    <object name="Nightstand">
-      <inherit name="editor_object" />
-      <visible type="boolean">false</visible>
-      <displayverbs type="stringlist">
-        <value>Open drawer</value>
-      </displayverbs>
-      <opendrawer type="script">
-        if (game_console.visited = True) {
-          MakeObjectVisible (Cartridge 2021)
-          msg ("You see a game cartridge for \"2021\", which you didn't notice before... maybe you should investigate further")
-          ShowRoomDescription()
-        }
-        else {
-          msg ("You aren't sure what you are looking for here... maybe check around the room for some more information")
-        }
-      </opendrawer>
-      <attr name="feature_container" type="boolean">false</attr>
-      <close type="boolean">false</close>
-      <onopen type="script">
-        MakeObjectVisible (Cartridge 2021)
-      </onopen>
-    </object>
     <object name="Desk">
       <inherit name="editor_object" />
       <visible type="boolean">false</visible>
@@ -218,6 +196,28 @@
       <displayverbs type="stringlist">
         <value>Look at</value>
       </displayverbs>
+    </object>
+    <object name="Nightstand">
+      <inherit name="editor_object" />
+      <visible type="boolean">false</visible>
+      <displayverbs type="stringlist">
+        <value>Open drawer</value>
+      </displayverbs>
+      <opendrawer type="script">
+        if (game_console.visited = True) {
+          MakeObjectVisible (Cartridge 2021)
+          msg ("You see a game cartridge for \"2021\", which you didn't notice before... maybe you should investigate further")
+          ShowRoomDescription()
+        }
+        else {
+          msg ("You aren't sure what you are looking for here... maybe check around the room for some more information")
+        }
+      </opendrawer>
+      <attr name="feature_container" type="boolean">false</attr>
+      <close type="boolean">false</close>
+      <onopen type="script">
+        MakeObjectVisible (Cartridge 2021)
+      </onopen>
     </object>
   </object>
   <verb>
