@@ -63,8 +63,13 @@
   <object name="flip tassel">
     <options type="stringdictionary">
       <item>
+<<<<<<< HEAD
         <key>test page</key>
         <value>test option</value>
+=======
+        <key>Graduation 1979 unf</key>
+        <value>Graduate</value>
+>>>>>>> a1a0e705084d4a1320b96fc0eb7bd946a32de5c0
       </item>
     </options>
   </object>
