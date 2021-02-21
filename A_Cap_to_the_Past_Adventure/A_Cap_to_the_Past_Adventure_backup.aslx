@@ -94,7 +94,7 @@
       <usestandardverblist />
       <look>It's a small square shaped box wrapped with leftover snowflake wrapping and a red ribbon.</look>
       <openit type="script"><![CDATA[
-        msg ("It's an old graduation cap--not that it's really any different from the ones that your school tries to make every student each year.<br/><br/>You: \"Oh, it's...neat.\"<br/><br/>Mom: \"I think you should wear it to the ceremony! Put it on!\"<br/><br/>You: \"Do I have to?\"<br/><br/>Mom: \"Yes. I'm sure all of your friends will think it's so cool.\"<br/><br/>You begrudingly place the hat on your head. Maybe you can take it off later without Terri noticing...")
+        msg ("It's an old graduation cap--not that it's really any different from the ones that your school tries to make every student buy a new one of each year.<br/><br/>You: \"Oh, it's...neat.\"<br/><br/>Mom: \"I think you should wear it to the ceremony! Put it on!\"<br/><br/>You: \"Do I have to?\"<br/><br/>Mom: \"Yes. I'm sure all of your friends will think it's so cool.\"<br/><br/>You begrudingly place the hat on your head. Maybe you can take it off later without Terri noticing...")
         create exit ("graduation", Kitchen 2021, Graduation 2021)
         MakeObjectInvisible (gift)
         msg (FormatExitList("You can go to", ScopeExits(), "or", ". "))
@@ -167,8 +167,9 @@
           SetTimeout (1) {
             SetTimeout (1) {
               msg ("<br/>Really dizzy...")
-              SetTimeout (2) {
-                MoveObject (player, Graduation 2021 post game)
+              SetTimeout (1) {
+                create exit ("Did it just happen again?", Bedroom 1979, Graduation 2021 post game)
+                msg (FormatExitList("", ScopeExits(), "", " "))
               }
             }
           }
@@ -265,6 +266,16 @@
         MakeObjectVisible (Cartridge 2021)
       </onopen>
     </object>
+    <object name="player">
+      <inherit name="editor_object" />
+      <inherit name="editor_player" />
+      <statusattributes type="stringdictionary" />
+      <attr name="talked_to_mom" type="string"></attr>
+      <orderedpizza type="boolean">false</orderedpizza>
+      <disco type="boolean">false</disco>
+      <attr name="changedtalked_to_mom" type="script">
+      </attr>
+    </object>
   </object>
   <verb>
     <property>sleep</property>
@@ -297,7 +308,7 @@
     </firstenter>
     <beforefirstenter type="script"><![CDATA[
       ClearScreen
-      msg ("It's a warm day. You see all of your classmates hanging around talking.<br/><br/>Trevor: Hey, nice hat!<br/>You: Really?<br/>Trevorl: Yeah, it's like everyone elses, but it doesn't have that shiny, plastic-y look to it.<br/><br/>Maybe you won't try and get rid of it after all...<br/><br/>Principal Garcia: Now, I know you all just want to get the ceremony over with, but your families all want you to look your best. That's why you're gonna need to spend the next two hours rehearsing. Everybody line up by......<br/><br/>Everyone groans and begrudingly follows her directions as she makes them spend the last 120 minutes of their high school careers learing how to stand up and walk across a field.<br/><br/>Eventually parents start showing up, the school band plays \"Land of hope and glory,\" and you, and everyone else, do exactly what Principal Garcia told you to do.<br/><br/>Now comes the part you've been waiting for: the time when everyone flips the tassel on their graduation caps to signify their achievement.")
+      msg ("It's a warm day. You see all of your classmates hanging around talking.<br/><br/>Trevor: Hey, nice hat!<br/>You: Really?<br/>Trevorl: Yeah, it's like everyone elses, but it doesn't have that shiny, plastic-y look to it.<br/><br/>Maybe you won't try and get rid of it after all...<br/><br/>Principal Garcia: Now, I know you all just want to get the ceremony over with, but your families all want you to look your best. That's why you're gonna need to spend the next two hours rehearsing. Everybody line up by......<br/><br/>Everyone groans and begrudingly follows her directions as she makes them spend the last 120 minutes of their high school careers learing how to stand up and walk across a field.<br/><br/>Eventually parents start showing up, the school band plays \"Pomp and Circumstance,\" and you, and everyone else, do exactly what Principal Garcia told you to do.<br/><br/>Now comes the part you've been waiting for: the time when everyone flips the tassel on their graduation caps to signify their achievement.")
     ]]></beforefirstenter>
     <object name="tassel">
       <inherit name="editor_object" />
@@ -308,7 +319,7 @@
         msg ("You feel tired, for some reason")
         SetTimeout (1) {
           msg ("And dizzy")
-          SetTimeout (2) {
+          SetTimeout (1) {
             msg ("Really dizzy...")
             SetTimeout (1) {
               msg ("Your vision starts to blur")
@@ -360,7 +371,7 @@
     <prefix>the </prefix>
     <descprefix>You are at</descprefix>
     <firstenter type="script">
-      msg ("There's a weird smell--is it smoking or cigarettes?")
+      msg ("There's a weird smell--is it smog or cigarettes?")
     </firstenter>
     <beforefirstenter type="script">
       ClearScreen
@@ -510,7 +521,7 @@
     </firstenter>
     <beforefirstenter type="script"><![CDATA[
       ClearScreen
-      msg ("You enter your kitchen, or what looks a little bit like it anyway. Gone are your smart devices and cooking gadgetry--their place has been taken by an old gas-burning stove and wobbly table.<br/><br/>Maggie: What's going on with you? It seems like you've seen a ghost. Good thing your best friend Maggie is here to help you out. What would you do without me?<br/><br/>You: I don't know<br/><br/>Maggie:  Well, it sounds like there's someone at the door. You better go open it.")
+      msg ("The trip back in that girl's car flew by as you sat there wondering how exactly this all could have happened.<br/><br/>You follow her into your kitchen, or what looks a little bit like it anyway. Gone are your smart devices and cooking gadgetry--their place has been taken by an old gas-burning stove and wobbly table.<br/><br/>Maggie: What's going on with you? It seems like you've seen a ghost. Good thing your best friend Maggie is here to help you out. What would you do without me?<br/><br/>You: I don't know<br/><br/>Maggie:  Well, it sounds like there's someone at the door. You better go open it.")
     ]]></beforefirstenter>
     <object name="maggie at party">
       <inherit name="editor_object" />
@@ -546,7 +557,7 @@
     <descprefix>You are in</descprefix>
     <isroom />
     <firstenter type="script"><![CDATA[
-      msg ("You make your way towards the door and answer it. You recognize who you've named uncle-Ian-guy in your head, but he's with a bunch of other strangers. Their clothes are all vintage style. You let them in. Soon after, another crowd streams in. Are you supposed to be throwing a party or something?<br/>You go into your living room.<br/>It's got a shaggy rug and a tube TV with rabbit-ears, which would seem weird under different circumstances. The room is pretty crowded now. There's well over 30 guests--you don't think to count them.")
+      msg ("You make your way towards the door and answer it. You recognize who you've named uncle-Ian-guy in your head, but he's with a bunch of other strangers. Their clothes are all vintage style. You let them in. Soon after, another crowd streams in. Are you supposed to be throwing a party or something?<br/>You go into your living room.<br/>It's got a shaggy rug and a tube TV with rabbit-ears, which would seem weird under different circumstances. The room is pretty crowded now. There's well over 30 guests--you don't think to count them.<br/>You recognize a few of them, but others you might be able to learn the names of by talking to people.")
     ]]></firstenter>
     <object name="ian at party1">
       <inherit name="editor_object" />
@@ -667,7 +678,7 @@
       <usedefaultprefix type="boolean">false</usedefaultprefix>
       <prefix type="string"></prefix>
       <alias>guest 1</alias>
-      <look>Her and her friend are their own little clique</look>
+      <look>She and her friend are their own little clique</look>
       <suffix type="string"></suffix>
       <scenery type="boolean">false</scenery>
       <beforeenter type="script">
@@ -684,7 +695,7 @@
           ShowRoomDescription
         }
         else if (player.disco = false) {
-          msg ("Bella: \"This pizza is great, but that George Jr. over there is an poophead. Dominic swears he saw him steal Mikayla's Walkman. Guess what showed up for sale in the classifieds the next day?\"<br/><br/>Brenda: \"The walkman?\"<br/><br/>Bella: \"No, an ad for Georges pizza.\"<br/><br/>Oh, that's George Jr. in the pizza shirt! That tracks.")
+          msg ("Bella: \"This pizza is great, but that George Jr. over there is an poophead. Dominic swears he saw him steal Mikayla's Walkman. Guess what showed up for sale in the classifieds the next day?\"<br/><br/>Brenda: \"The walkman?\"<br/><br/>Bella: \"No, an ad for George's pizza.\"<br/><br/>Oh, that's George Jr. in the pizza shirt! That tracks.")
           guest 3.alias = "George Jr."
           ShowRoomDescription
         }
@@ -739,7 +750,7 @@
       <description>Wrapped with a bow</description>
       <visible />
       <usedefaultprefix type="boolean">false</usedefaultprefix>
-      <prefix>another </prefix>
+      <prefix type="string"></prefix>
       <alias>guest 3</alias>
       <look>He's wearing a shirt with a picture of a pizza on it</look>
       <suffix type="string"></suffix>
@@ -854,16 +865,6 @@
     <exit name="head to bed" alias="head to bed" to="Bedroom 1979">
       <visible type="boolean">false</visible>
     </exit>
-    <object name="player">
-      <inherit name="editor_object" />
-      <inherit name="editor_player" />
-      <statusattributes type="stringdictionary" />
-      <attr name="talked_to_mom" type="string"></attr>
-      <orderedpizza type="boolean">false</orderedpizza>
-      <disco type="boolean">false</disco>
-      <attr name="changedtalked_to_mom" type="script">
-      </attr>
-    </object>
   </object>
   <object name="Graduation 2021 post game">
     <inherit name="editor_room" />
