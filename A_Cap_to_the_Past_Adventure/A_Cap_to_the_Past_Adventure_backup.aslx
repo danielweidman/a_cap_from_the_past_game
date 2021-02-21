@@ -117,6 +117,16 @@
     <exit alias="downstairs" to="Kitchen 2021">
       <prefix type="string"></prefix>
     </exit>
+    <object name="player">
+      <inherit name="editor_object" />
+      <inherit name="editor_player" />
+      <statusattributes type="stringdictionary" />
+      <attr name="talked_to_mom" type="string"></attr>
+      <orderedpizza type="boolean">false</orderedpizza>
+      <disco type="boolean">false</disco>
+      <attr name="changedtalked_to_mom" type="script">
+      </attr>
+    </object>
   </object>
   <object name="Bedroom 1979">
     <inherit name="editor_room" />
@@ -841,16 +851,6 @@
     <exit name="head to bed" alias="head to bed" to="Bedroom 1979">
       <visible type="boolean">false</visible>
     </exit>
-    <object name="player">
-      <inherit name="editor_object" />
-      <inherit name="editor_player" />
-      <statusattributes type="stringdictionary" />
-      <attr name="talked_to_mom" type="string"></attr>
-      <orderedpizza type="boolean">false</orderedpizza>
-      <disco type="boolean">false</disco>
-      <attr name="changedtalked_to_mom" type="script">
-      </attr>
-    </object>
   </object>
   <object name="Graduation 2021 post game">
     <inherit name="editor_room" />
