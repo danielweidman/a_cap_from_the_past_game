@@ -149,7 +149,6 @@
       </inventoryverbs>
       <isroom type="boolean">false</isroom>
       <scenery type="boolean">false</scenery>
-      <look>A nightstand.</look>
       <alias>Game Console</alias>
       <inspect type="script">
         if (Got(Cartridge 2021)) {
@@ -161,14 +160,13 @@
         this.visited = true
         ShowRoomDescription
       </inspect>
-      <play type="script">
+      <play type="script"><![CDATA[
         if (Got(Cartridge 2021)) {
           msg ("You insert the cartridge and the game loads... after pressing play you suddenly get dizzy again, much like at graduation.")
           RemoveObject (Cartridge 2021)
           SetTimeout (1) {
-            msg ("")
             SetTimeout (1) {
-              msg ("Really dizzy...")
+              msg ("<br/>Really dizzy...")
               SetTimeout (2) {
                 MoveObject (player, Graduation 2021 post game)
               }
@@ -178,7 +176,7 @@
         else {
           msg ("There is no game cartridge inserted... you cannot play without a cartridge...")
         }
-      </play>
+      ]]></play>
     </object>
     <object name="Desk">
       <inherit name="editor_object" />
