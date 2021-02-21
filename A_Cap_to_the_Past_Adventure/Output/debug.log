@@ -10,3 +10,12 @@
 [0221/094349:ERROR:renderer_main.cc(207)] Running without renderer sandbox
 [0221/094351:WARNING:message_in_transit_queue.cc(18)] Destroying nonempty message queue
 [0221/103743:WARNING:message_in_transit_queue.cc(18)] Destroying nonempty message queue
+[0221/170059:ERROR:renderer_main.cc(207)] Running without renderer sandbox
+[0221/170100:ERROR:cache_util_win.cc(20)] Unable to move the cache: 5
+[0221/170100:ERROR:cache_util.cc(132)] Unable to move cache folder C:\Users\danie\AppData\Local\Temp\GPUCache to C:\Users\danie\AppData\Local\Temp\old_GPUCache_000
+[0221/170100:ERROR:cache_creator.cc(132)] Unable to create cache
+[0221/170100:ERROR:shader_disk_cache.cc(588)] Shader Cache Creation failed: -2
+[0221/172226:WARNING:dns_config_service_win.cc(654)] Failed to read DnsConfig.
+[0221/172229:WARNING:dns_config_service_win.cc(654)] Failed to read DnsConfig.
+[0221/172229:WARNING:dns_config_service_win.cc(654)] Failed to read DnsConfig.
+[0221/172229:WARNING:dns_config_service_win.cc(654)] Failed to read DnsConfig.
