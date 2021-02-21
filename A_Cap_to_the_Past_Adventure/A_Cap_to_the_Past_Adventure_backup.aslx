@@ -8,6 +8,7 @@
     <firstpublished>2021</firstpublished>
     <author>Tyler Pelton and Daniel Weidman</author>
     <turnoffcompass />
+    <showcommandbar type="boolean">false</showcommandbar>
     <start type="script">
     </start>
   </game>
@@ -371,6 +372,7 @@
       <look>A rebel. Huh.</look>
       <suffix>who wore a denim jacket over her robes</suffix>
       <scenery type="boolean">false</scenery>
+      <attr name="ready to go" type="boolean">false</attr>
       <beforeenter type="script">
         =
       </beforeenter>
@@ -397,7 +399,6 @@
           msg ("Stranger: \"You said your parents took their car with them? I'll give you a ride back.\"")
         }
       </speak>
-      <attr name="ready to go" type="boolean">false</attr>
     </object>
     <object name="shannon">
       <inherit name="editor_object" />
@@ -482,22 +483,12 @@
         MakeObjectInvisible
       </enter>
       <speak type="script">
-        msg ("Stranger: \"Tear-bear! Don't worry about the drinks--I got a hook up at the energy drink bottling center.\"")
+        msg ("Stranger: \"Terr-bear! Don't worry about the drinks--I got a hook up at the energy drink bottling center.\"")
         this.visited = true
         if (shannon.visited = true and ian.visited = true and jose.visited = true) {
           msg ("That person who offered you a ride back looks like she has something to say.")
         }
       </speak>
-    </object>
-    <object name="player">
-      <inherit name="editor_object" />
-      <inherit name="editor_player" />
-      <statusattributes type="stringdictionary" />
-      <attr name="talked_to_mom" type="string"></attr>
-      <orderedpizza type="boolean">false</orderedpizza>
-      <disco type="boolean">false</disco>
-      <attr name="changedtalked_to_mom" type="script">
-      </attr>
     </object>
   </object>
   <object name="Kitchen 1979">
@@ -506,12 +497,12 @@
     <usedefaultprefix type="boolean">false</usedefaultprefix>
     <prefix>the </prefix>
     <descprefix>You are at</descprefix>
-    <firstenter type="script"><![CDATA[
-      msg ("You enter your kitchen, or what looks a little bit like it anyway. Gone are your smart devices and cooking gadgetry--their place has been taken by an old gas-burning stove and wobbly table.<br/><br/>Maggie: What's going on with you? It seems like you've seen a ghost. Good thing your best friend Maggie is here to help you out. What would you do with out me.<br/><br/>You: I don't know<br/><br/>Maggie:  Well, it sounds like there's someone at the door. You better go open it.")
-    ]]></firstenter>
-    <beforefirstenter type="script">
+    <firstenter type="script">
+    </firstenter>
+    <beforefirstenter type="script"><![CDATA[
       ClearScreen
-    </beforefirstenter>
+      msg ("You enter your kitchen, or what looks a little bit like it anyway. Gone are your smart devices and cooking gadgetry--their place has been taken by an old gas-burning stove and wobbly table.<br/><br/>Maggie: What's going on with you? It seems like you've seen a ghost. Good thing your best friend Maggie is here to help you out. What would you do with out me?<br/><br/>You: I don't know<br/><br/>Maggie:  Well, it sounds like there's someone at the door. You better go open it.")
+    ]]></beforefirstenter>
     <object name="maggie at party">
       <inherit name="editor_object" />
       <inherit name="female" />
@@ -537,6 +528,16 @@
       </speak>
     </object>
     <exit alias="answer the door" to="Filled lliving room 1979" />
+    <object name="player">
+      <inherit name="editor_object" />
+      <inherit name="editor_player" />
+      <statusattributes type="stringdictionary" />
+      <attr name="talked_to_mom" type="string"></attr>
+      <orderedpizza type="boolean">false</orderedpizza>
+      <disco type="boolean">false</disco>
+      <attr name="changedtalked_to_mom" type="script">
+      </attr>
+    </object>
   </object>
   <object name="Filled lliving room 1979">
     <inherit name="editor_room" />
@@ -546,7 +547,7 @@
     <descprefix>You are in</descprefix>
     <isroom />
     <firstenter type="script"><![CDATA[
-      msg ("You make your way towards the door and answer it. You recognize who you've named uncle-Ian-guy in your head, but he's with a bunch of other strangers. Their clothes are all vintage style. You let them in. Soon after, another crowd streams in. Are you supposed to be throwing a party or something?<br/>You go into your living room.<br/>It's got a shaggy rug and a tube TV with rabbit-ears, which would seem weird under different circumstanced. The room is pretty crowded now.")
+      msg ("You make your way towards the door and answer it. You recognize who you've named uncle-Ian-guy in your head, but he's with a bunch of other strangers. Their clothes are all vintage style. You let them in. Soon after, another crowd streams in. Are you supposed to be throwing a party or something?<br/>You go into your living room.<br/>It's got a shaggy rug and a tube TV with rabbit-ears, which would seem weird under different circumstances. The room is pretty crowded now. There's well over 30 guests--you don't think to count them.")
     ]]></firstenter>
     <object name="ian at party1">
       <inherit name="editor_object" />
@@ -770,19 +771,12 @@
       <inventoryverbs type="stringlist" />
       <visible type="boolean">false</visible>
       <callpizzaplace type="script"><![CDATA[
-        msg ("You place your finger in one of the circles and try to turn it just right. How hard can it be to use this thing?<br/><br/>Pretty hard apparently. After a couple attempts though, you here a voice on the other end.<br/><br/>Phone: Hello, how can I connect your call?<br/><br/>Is this one of those \"operator\" people?<br/><br/>You: \"Can you put me through to George's Pizza?\"<br/><br/>The operator connects you to the pizza place and you order 3 Large pepperoni pizzas...")
-        player.orderedpizza = True
-        SetTimeout (1) {
-          msg ("<br/>Some time passes... <br/>")
-          SetTimeout (1) {
-            msg ("The pizza guy makes a great entrance, seemingly lightening the mood a great deal, however something still seems off... You should go see what's wrong...")
-            MakeObjectInvisible (telephone)
-          }
-          MakeObjectInvisible (telephone)
-          SetTimeout (1) {
-            ShowRoomDescription
-          }
+        SetTurnTimeout (2) {
+          request (Hide, "Command")
         }
+        msg ("You place your finger in one of the circles and try to turn it just right. How hard can it be to use this thing?<br/><br/>Pretty hard apparently. After a couple attempts though, you here a voice on the other end.<br/><br/>Phone: Hello, how can I connect your call?<br/><br/>Is this one of those \"operator\" people?<br/><br/>You: \"Can you put me through to George's Pizza?\"<br/>")
+        order_pizza_function
+        player.orderedpizza = true
       ]]></callpizzaplace>
       <verb>
         <property>dial</property>
@@ -838,6 +832,7 @@
       <displayverbs type="stringlist" />
       <look>This seems like a perfect spot to setup your disco ball...</look>
       <usedefaultprefix type="boolean">false</usedefaultprefix>
+      <prefix>a place where you could</prefix>
       <setupdiscoball type="script"><![CDATA[
         RemoveObject (disco ball)
         msg ("You setup the disco ball and turn it on...<br/>")
@@ -852,7 +847,6 @@
           }
         }
       ]]></setupdiscoball>
-      <prefix>a place where you could</prefix>
     </object>
     <exit name="head to bed" alias="head to bed" to="Bedroom 1979">
       <visible type="boolean">false</visible>
@@ -899,4 +893,22 @@
     <pattern>setup disco ball</pattern>
     <defaultexpression>"You can't setup disco ball " + object.article + "."</defaultexpression>
   </verb>
+  <function name="order_pizza_function"><![CDATA[
+    msg ("Phone: \"George's pizza, how many pizzas do you want?\"")
+    request (Show, "Command")
+    result = "NOT INT"
+    get input {
+      if (IsInt(result) = true) {
+        msg ("The pizza guy makes a great entrance, carrying "+ result +" large pepporoni pizzas , seemingly lightening the mood a great deal, however something still seems off...<br>You should go see what's wrong...")
+        MakeObjectInvisible (telephone)
+        ShowRoomDescription
+      }
+      else {
+        msg ("I just needed a number, but since you're making this too difficult, I'm just gonna send over 5 large pepporonis and you can take it or leave it.<br>The pizza guy makes a great entrance, carrying  5 large pepporoni pizzas , seemingly lightening the mood a great deal, however something still seems off...<br>You should go see what's wrong...")
+        MakeObjectInvisible (telephone)
+        ShowRoomDescription
+      }
+    }
+    return (1)
+  ]]></function>
 </asl>
