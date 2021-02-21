@@ -94,7 +94,7 @@
       <usestandardverblist />
       <look>It's a small square shaped box wrapped with leftover snowflake wrapping and a red ribbon.</look>
       <openit type="script"><![CDATA[
-        msg ("It's an old graduation cap--not that it's really any different from the ones that your school tries to make every student each year.<br/><br/>You: \"Oh, it's...neat.\"<br/><br/>Mom: \"I think you should wear it to the ceremony! Put it on!\"<br/><br/>You: \"Do I have to?\"<br/><br/>Mom: \"Yes. I'm sure all of your friends will think it's so cool.\"<br/><br/>You begrudingly place he hat on your head. Maybe you can take it off later without Terri noticing...")
+        msg ("It's an old graduation cap--not that it's really any different from the ones that your school tries to make every student each year.<br/><br/>You: \"Oh, it's...neat.\"<br/><br/>Mom: \"I think you should wear it to the ceremony! Put it on!\"<br/><br/>You: \"Do I have to?\"<br/><br/>Mom: \"Yes. I'm sure all of your friends will think it's so cool.\"<br/><br/>You begrudingly place the hat on your head. Maybe you can take it off later without Terri noticing...")
         create exit ("graduation", Kitchen 2021, Graduation 2021)
         MakeObjectInvisible (gift)
         msg (FormatExitList("You can go to", ScopeExits(), "or", ". "))
@@ -122,16 +122,6 @@
     <exit alias="downstairs" to="Kitchen 2021">
       <prefix type="string"></prefix>
     </exit>
-    <object name="player">
-      <inherit name="editor_object" />
-      <inherit name="editor_player" />
-      <statusattributes type="stringdictionary" />
-      <attr name="talked_to_mom" type="string"></attr>
-      <orderedpizza type="boolean">false</orderedpizza>
-      <disco type="boolean">false</disco>
-      <attr name="changedtalked_to_mom" type="script">
-      </attr>
-    </object>
   </object>
   <object name="Bedroom 1979">
     <inherit name="editor_room" />
@@ -173,9 +163,18 @@
       </inspect>
       <play type="script">
         if (Got(Cartridge 2021)) {
-          msg ("You insert the cartridge and the game loads... after pressing play you suddenly get dizzy again, much like at graduation. Once you finally steady yourself and look around you realize you aren't in the bedroom anymore...")
+          msg ("You insert the cartridge and the game loads... after pressing play you suddenly get dizzy again, much like at graduation.")
           RemoveObject (Cartridge 2021)
-          MoveObject (player, Graduation 2021 post game)
+          SetTimeout (1) {
+            msg ("")
+            SetTimeout (1) {
+              msg ("Really dizzy...")
+              SetTimeout (2) {
+                ClearScreen
+                MoveObject (player, Graduation 2021 post game)
+              }
+            }
+          }
         }
         else {
           msg ("There is no game cartridge inserted... you cannot play without a cartridge...")
@@ -190,17 +189,14 @@
       </displayverbs>
       <search type="script">
         msg ("You see school notes and various polaroid photos of your mom and her friends throughout high school... You don't feel like any of this will be useful to entertain yourself...")
-        ShowRoomDescription
       </search>
     </object>
     <object name="Bed">
       <inherit name="editor_object" />
       <usestandardverblist type="boolean">false</usestandardverblist>
-      <displayverbs type="stringlist">
-        <value>Sleep</value>
-      </displayverbs>
+      <displayverbs type="stringlist" />
       <usedefaultprefix />
-      <sleep type="script">
+      <sleepin type="script">
         msg ("You had one too many energy drinks at the party... you should find something to do until you are tired enough to sleep...")
         MakeObjectVisible (Desk)
         MakeObjectVisible (Nightstand)
@@ -210,7 +206,7 @@
         MakeObjectVisible (Window)
         MakeObjectVisible (Mirror)
         ShowRoomDescription
-      </sleep>
+      </sleepin>
     </object>
     <object name="Cartridge 2021">
       <inherit name="editor_object" />
@@ -271,6 +267,16 @@
       <onopen type="script">
         MakeObjectVisible (Cartridge 2021)
       </onopen>
+    </object>
+    <object name="player">
+      <inherit name="editor_object" />
+      <inherit name="editor_player" />
+      <statusattributes type="stringdictionary" />
+      <attr name="talked_to_mom" type="string"></attr>
+      <orderedpizza type="boolean">false</orderedpizza>
+      <disco type="boolean">false</disco>
+      <attr name="changedtalked_to_mom" type="script">
+      </attr>
     </object>
   </object>
   <verb>
@@ -517,7 +523,7 @@
     </firstenter>
     <beforefirstenter type="script"><![CDATA[
       ClearScreen
-      msg ("You enter your kitchen, or what looks a little bit like it anyway. Gone are your smart devices and cooking gadgetry--their place has been taken by an old gas-burning stove and wobbly table.<br/><br/>Maggie: What's going on with you? It seems like you've seen a ghost. Good thing your best friend Maggie is here to help you out. What would you do with out me?<br/><br/>You: I don't know<br/><br/>Maggie:  Well, it sounds like there's someone at the door. You better go open it.")
+      msg ("You enter your kitchen, or what looks a little bit like it anyway. Gone are your smart devices and cooking gadgetry--their place has been taken by an old gas-burning stove and wobbly table.<br/><br/>Maggie: What's going on with you? It seems like you've seen a ghost. Good thing your best friend Maggie is here to help you out. What would you do without me?<br/><br/>You: I don't know<br/><br/>Maggie:  Well, it sounds like there's someone at the door. You better go open it.")
     ]]></beforefirstenter>
     <object name="maggie at party">
       <inherit name="editor_object" />
@@ -587,6 +593,7 @@
         else {
           msg ("Ian: \"This party is awesome!\"")
         }
+        ShowRoomDescription
       </speak>
     </object>
     <object name="maggie at party1">
@@ -618,11 +625,11 @@
         else if (player.disco = false) {
           msg ("Maggie: \"You're getting closer... I thought you threw disco parties? There's like a bajillion people here and they all want to dance.\"<br/><br/>You notice a closet where you remember your parents used to store party supplies...")
           MakeObjectVisible (Closet)
-          ShowRoomDescription
         }
         else {
           msg ("Maggie: \"This is more like it! ")
         }
+        ShowRoomDescription
       ]]></speak>
     </object>
     <object name="shannon1">
@@ -657,6 +664,7 @@
         else {
           msg ("Shannon: \"Wow! Awesome lights girl!\"")
         }
+        ShowRoomDescription
       </speak>
     </object>
     <object name="guest 1">
@@ -672,7 +680,7 @@
       <usedefaultprefix type="boolean">false</usedefaultprefix>
       <prefix type="string"></prefix>
       <alias>guest 1</alias>
-      <look>Her and her friend are their own little click</look>
+      <look>Her and her friend are their own little clique</look>
       <suffix type="string"></suffix>
       <scenery type="boolean">false</scenery>
       <beforeenter type="script">
@@ -730,6 +738,7 @@
         else {
           msg ("Johnny: \"I've been to better parties.\"<br/><br/>You: \"What else would you change???\"<br/><br/>Johnny: \"I dunno...\"<br/><br/>You: \"...\"")
         }
+        ShowRoomDescription
       ]]></speak>
     </object>
     <object name="guest 3">
@@ -759,11 +768,11 @@
           msg ("Stranger: \"Boy, my stomach is empty after 3 hours sitting around. Could we order George's Pizza?\"<br/><br/>You notice the old rotary phone in the corner...")
           this.visited = True
           MakeObjectVisible (telephone)
-          ShowRoomDescription
         }
         else {
           msg ("George Jr: \"Wow, I really love George's Pizza.\"<br/><br/>You notice this guy seems really into George's pizza...He seems familiar and you think he may run the George's Pizza place you know in 2021...")
         }
+        ShowRoomDescription
       ]]></speak>
     </object>
     <object name="telephone">
@@ -867,7 +876,6 @@
     <firstenter type="script">
     </firstenter>
     <beforefirstenter type="script">
-      ClearScreen
     </beforefirstenter>
     <object name="mom_postgrad">
       <inherit name="editor_object" />
@@ -890,6 +898,7 @@
       <usedefaultprefix type="boolean">false</usedefaultprefix>
       <prefix>your friend</prefix>
       <alias>Trevor</alias>
+      <look type="string"></look>
       <beforeenter type="script">
         =
       </beforeenter>
@@ -899,7 +908,6 @@
       <speak type="script"><![CDATA[
         msg ("Trevor: \"You look a little bit shaken. Are you still up for Alex's thing?\"<br/>You: \"Uhhh, yeah...\"<br/>Trevor: \"There'll be energy drinks there, maybe that will make you feel better.\"")
       ]]></speak>
-      <look type="string"></look>
     </object>
   </object>
   <verb>
@@ -922,18 +930,23 @@
     <pattern>setup disco ball</pattern>
     <defaultexpression>"You can't setup disco ball " + object.article + "."</defaultexpression>
   </verb>
+  <verb>
+    <property>sleepin</property>
+    <pattern>sleep in</pattern>
+    <defaultexpression>"You can't sleep in " + object.article + "."</defaultexpression>
+  </verb>
   <function name="order_pizza_function"><![CDATA[
     msg ("Phone: \"George's pizza, how many pizzas do you want?\"")
     request (Show, "Command")
     result = "NOT INT"
     get input {
       if (IsInt(result) = true) {
-        msg ("The pizza guy makes a great entrance, carrying "+ result +" large pepporoni pizzas , seemingly lightening the mood a great deal, however something still seems off...<br>You should look and see what's wrong...")
+        msg ("The pizza guy makes a great entrance, carrying "+ result +" large pepporoni pizzas , seemingly lightening the mood a great deal, however something still seems off...<br>You should look and see what's wrong...(type \"look\")")
         MakeObjectInvisible (telephone)
         ShowRoomDescription
       }
       else {
-        msg ("I just needed a number, but since you're making this too difficult, I'm just gonna send over 5 large pepporonis and you can take it or leave it.<br>The pizza guy makes a great entrance, carrying  5 large pepporoni pizzas , seemingly lightening the mood a great deal, however something still seems off...<br>You should look and see what's wrong...")
+        msg ("I just needed a number, but since you're making this too difficult, I'm just gonna send over 5 large pepporonis and you can take it or leave it.<br>The pizza guy makes a great entrance, carrying  5 large pepporoni pizzas , seemingly lightening the mood a great deal, however something still seems off...<br>You should look and see what's wrong... (type \"look\")")
         MakeObjectInvisible (telephone)
         ShowRoomDescription
       }

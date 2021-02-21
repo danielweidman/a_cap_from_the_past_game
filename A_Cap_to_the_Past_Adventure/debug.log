@@ -128,3 +128,4 @@
 [0221/122952:WARNING:dns_config_service_win.cc(654)] Failed to read DnsConfig.
 [0221/122954:WARNING:dns_config_service_win.cc(654)] Failed to read DnsConfig.
 [0221/122954:WARNING:dns_config_service_win.cc(654)] Failed to read DnsConfig.
+[0221/134056:ERROR:renderer_main.cc(207)] Running without renderer sandbox
