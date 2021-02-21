@@ -8,9 +8,8 @@
     <firstpublished>2021</firstpublished>
     <author>Tyler Pelton and Daniel Weidman</author>
     <turnoffcompass />
-    <start type="script"><![CDATA[
-      msg ("You wake up to the too-familiar sound of your alarm clock. It's 10AM, but that's still way too early for a Saturday. Groggy from the last night, you hit the snooze button and start to doze off.<br/>That is, until your remember one critical fact: today is the day you officially graduate from high school! Four long years and you're finally done. With that on your mind, you suddenly regain your energy and sit up.")
-    ]]></start>
+    <start type="script">
+    </start>
   </game>
   <object name="Kitchen 2021">
     <inherit name="editor_room" />
@@ -38,7 +37,7 @@
       </enter>
       <speak type="script"><![CDATA[
         if (this.visited = False) {
-          msg ("Mom: Sweetie, I want you to have this. I know it's old, but I hope you'll make use it just as I did so long ago.<br/><br/>Dad: Oh, right before that rager?<br/><br/>Mom: Hush now. Disco isn't a thing these days anyway. Olivia wouldn't understand.")
+          msg ("Mom: \"Sweetie, I want you to have this. I know it's old, but I hope you'll make use it just as I did so long ago.\"<br/><br/>Dad: Oh, right before that rager?<br/><br/>Mom: \"Hush now. Disco isn't a thing these days anyway. Olivia wouldn't understand.\"")
           MakeObjectVisible (gift)
           ShowRoomDescription
           this.visited = true
@@ -64,7 +63,7 @@
       <usestandardverblist />
       <look>It's a small square shaped box wrapped with leftover snowflake wrapping and a red ribbon.</look>
       <openit type="script"><![CDATA[
-        msg ("It's an old graduation cap--not that it's really any different from the ones that your school tries to make every student each year.<br/><br/>You: Oh, it's...neat<br/><br/>Mom: I think you should wear it to the ceremony! Put it on!<br/><br/>You: Do I have to?<br/><br/>Mom: Yes. I'm sure all of your friends will think it's so cool.<br/><br/>You begrudingly place he hat on your head.")
+        msg ("It's an old graduation cap--not that it's really any different from the ones that your school tries to make every student each year.<br/><br/>You: \"Oh, it's...neat.\"<br/><br/>Mom: \"I think you should wear it to the ceremony! Put it on!\"<br/><br/>You: \"Do I have to?\"<br/><br/>Mom: \"Yes. I'm sure all of your friends will think it's so cool.\"<br/><br/>You begrudingly place he hat on your head. Maybe you can take it off later without Terri noticing...")
         create exit ("graduation", Kitchen 2021, Graduation 2021)
         MakeObjectInvisible (gift)
         msg (FormatExitList("You can go", ScopeExits(), "or", ", "))
@@ -90,7 +89,7 @@
       </enter>
       <speak type="script">
         if (mom.visited = False) {
-          msg ("Dad: Good morning! I think your mom has something for you.")
+          msg ("Dad: \"Good morning! I think your mom has something for you.\"")
           this.visited = true
         }
         else {
@@ -112,6 +111,9 @@
   <object name="Bedroom 2021">
     <inherit name="editor_room" />
     <alias>Bedroom</alias>
+    <firstenter type="script"><![CDATA[
+      msg ("You wake up to the too-familiar sound of your alarm clock. It's 10AM, but that's still way too early for a Saturday. Groggy from the last night, you hit the snooze button and start to doze off.<br/>That is, until your remember one critical fact: today is the day you officially graduate from high school! Four long years and you're finally done. With that on your mind, you suddenly regain your energy and sit up.")
+    ]]></firstenter>
     <exit alias="downstairs" to="Kitchen 2021">
       <prefix type="string"></prefix>
     </exit>
@@ -332,7 +334,7 @@
         MakeObjectInvisible
       </enter>
       <speak type="script"><![CDATA[
-        msg ("Trevor: I hope you're going to Alex's party tonight.<br/>You: You bet.")
+        msg ("Trevor: \"I hope you're going to Alex's party tonight.\"<br/>You: \"You bet.\"")
       ]]></speak>
     </object>
   </object>
@@ -380,14 +382,14 @@
         if (shannon.visited = true) {
           if (ian.visited = true) {
             if (jose.visited = true) {
-              msg ("Ready to go? Follow me.")
+              msg ("Stranger: \"Ready to go? Follow me.\"")
               create exit ("in the car", Graduation 1979, Kitchen 1979)
               msg (FormatExitList("You can go", ScopeExits(), "or", ", "))
             }
           }
         }
         else {
-          msg ("Stranger: You said your parents took their car with them? I'll give you a ride back.")
+          msg ("Stranger: \"You said your parents took their car with them? I'll give you a ride back.\"")
         }
       </speak>
     </object>
@@ -414,7 +416,7 @@
         MakeObjectInvisible
       </enter>
       <speak type="script">
-        msg ("Stranger: Hiya Terri, I'm pumped for your thing tonight--so convenient that your parents are out of town! (***question**)")
+        msg ("Stranger: \"Hiya Terri, I'm pumped for your thing tonight--so convenient that your parents are out of town!\"")
         this.visited = true
         if (shannon.visited = true and ian.visited = true and jose.visited = true) {
           msg ("That person who offered you a ride back looks like she has something to say.")
@@ -433,7 +435,7 @@
       <visible />
       <usedefaultprefix type="boolean">false</usedefaultprefix>
       <prefix type="string"></prefix>
-      <alias>another stranger</alias>
+      <alias>boring stranger</alias>
       <look>Is that a calculator watch on his wrist?</look>
       <suffix> on your left</suffix>
       <scenery type="boolean">false</scenery>
@@ -444,7 +446,7 @@
         MakeObjectInvisible
       </enter>
       <speak type="script">
-        msg ("So Terrs, what, there are like 30 people coming? (**ask question**)")
+        msg ("Stranger: \"So Terrs, what are there are, like 30 people coming?\"")
         this.visited = true
         if (shannon.visited = true and ian.visited = true and jose.visited = true) {
           msg ("That person who offered you a ride back looks like she has something to say.")
@@ -463,7 +465,7 @@
       <visible />
       <usedefaultprefix type="boolean">false</usedefaultprefix>
       <prefix type="string"></prefix>
-      <alias>stangely-familiar stranger</alias>
+      <alias>oddly-familiar stranger</alias>
       <look>Woah, his face looks just like Uncle Ian's</look>
       <suffix>sitting behind you</suffix>
       <scenery type="boolean">false</scenery>
@@ -474,7 +476,7 @@
         MakeObjectInvisible
       </enter>
       <speak type="script">
-        msg ("Stranger: Tear-bear! Don't worry about the drinks--I got a hook up at the energy drink bottling center")
+        msg ("Stranger: \"Tear-bear! Don't worry about the drinks--I got a hook up at the energy drink bottling center.\"")
         this.visited = true
         if (shannon.visited = true and ian.visited = true and jose.visited = true) {
           msg ("That person who offered you a ride back looks like she has something to say.")
@@ -515,34 +517,36 @@
         MakeObjectInvisible
       </enter>
       <speak type="script">
-        msg ("Maggie: Get the door!")
+        msg ("Maggie: \"Get the door!\"")
       </speak>
     </object>
     <exit alias="answer the door" to="Filled lliving room 1979" />
   </object>
   <object name="Filled lliving room 1979">
     <inherit name="editor_room" />
-    <alias>Living room</alias>
+    <alias>living room</alias>
     <usedefaultprefix type="boolean">false</usedefaultprefix>
     <prefix>the </prefix>
-    <descprefix>You are at</descprefix>
+    <descprefix>You are in</descprefix>
     <isroom />
     <firstenter type="script"><![CDATA[
-      msg ("You make your way towards the door (**make this an actual action**) and answer it. You recognize who you've named uncle-Ian-guy in your head, but he's with a bunch of other strangers. Their clothes are all vintage style. (**ask if let them in**). You let them in (**make verb***). Soon after, another crowd streams in. Are you supposed to be throwing a party or something?<br/><br/>You go into your living room.<br/>It's got a shaggy rug and a tube TV with rabbit-ears, which would seem weird under different circumstanced. The room is pretty crowded now.")
+      msg ("You make your way towards the door and answer it. You recognize who you've named uncle-Ian-guy in your head, but he's with a bunch of other strangers. Their clothes are all vintage style. You let them in. Soon after, another crowd streams in. Are you supposed to be throwing a party or something?<br/>You go into your living room.<br/>It's got a shaggy rug and a tube TV with rabbit-ears, which would seem weird under different circumstanced. The room is pretty crowded now.")
     ]]></firstenter>
     <object name="ian at party1">
       <inherit name="editor_object" />
       <inherit name="namedmale" />
       <inventoryverbs type="stringlist" />
-      <displayverbs type="stringlist" />
+      <displayverbs type="stringlist">
+        <value>Look at</value>
+      </displayverbs>
       <isroom />
       <description>Wrapped with a bow</description>
       <visible />
       <usedefaultprefix type="boolean">false</usedefaultprefix>
       <prefix type="string"></prefix>
-      <alias>uncle-Ian-guy</alias>
+      <alias>Uncle-Ian-guy</alias>
       <look>Woah, his face looks just like Uncle Ian's</look>
-      <suffix>sitting behind you</suffix>
+      <suffix type="string"></suffix>
       <scenery type="boolean">false</scenery>
       <beforeenter type="script">
         =
@@ -552,13 +556,13 @@
       </enter>
       <speak type="script">
         if (player.orderedpizza = false) {
-          msg ("Stranger: \"I wish there was something solid to go with these sugary energy drinks we're all cracking open\"")
+          msg ("Ian: \"I wish there was something solid to go with these sugary energy drinks we're all cracking open\"")
         }
         else if (player.disco = false) {
-          msg ("Stranger: \"This pizza is great... wish there was something else to do though...\"")
+          msg ("Ian: \"This pizza is great... wish there was something else to do though...\"")
         }
         else {
-          msg ("Stranger: \"This party is awesome!\"")
+          msg ("Ian: \"This party is awesome!\"")
         }
       </speak>
     </object>
@@ -566,14 +570,16 @@
       <inherit name="editor_object" />
       <inherit name="female" />
       <inventoryverbs type="stringlist" />
-      <displayverbs type="stringlist" />
+      <displayverbs type="stringlist">
+        <value>Look at</value>
+      </displayverbs>
       <isroom />
       <description>Wrapped with a bow</description>
       <visible />
       <usedefaultprefix type="boolean">false</usedefaultprefix>
       <prefix type="string"></prefix>
       <alias>Maggie</alias>
-      <look>A rebel. Huh.</look>
+      <look>A rebel, and your best friend, apparently</look>
       <suffix type="string"></suffix>
       <scenery type="boolean">false</scenery>
       <beforeenter type="script">
@@ -596,18 +602,20 @@
         }
       ]]></speak>
     </object>
-    <object name="guest 1">
+    <object name="shannon1">
       <inherit name="editor_object" />
       <inherit name="female" />
       <inventoryverbs type="stringlist" />
-      <displayverbs type="stringlist" />
+      <displayverbs type="stringlist">
+        <value>Look at</value>
+      </displayverbs>
       <isroom />
       <description>Wrapped with a bow</description>
       <visible />
       <usedefaultprefix type="boolean">false</usedefaultprefix>
       <prefix type="string"></prefix>
-      <alias>guest 1</alias>
-      <look>A rebel. Huh.</look>
+      <alias>Shannon</alias>
+      <look>Something about her accessories just screams "retro". Does she shop exclusively at consignment stores or something?</look>
       <suffix type="string"></suffix>
       <scenery type="boolean">false</scenery>
       <beforeenter type="script">
@@ -618,28 +626,30 @@
       </enter>
       <speak type="script">
         if (player.orderedpizza = false) {
-          msg ("Stranger: \"I'm hungry. I thought there would be snacks?\"")
+          msg ("Shannon: \"I'm hungry. I thought there would be snacks?\"")
         }
         else if (player.disco = false) {
-          msg ("Stranger: \"I wish there were pretty lights\"")
+          msg ("Shannon: \"I wish there were pretty lights.\"")
         }
         else {
-          msg ("Stranger: \"Wow! Awesome lights girl!\"")
+          msg ("Shannon: \"Wow! Awesome lights girl!\"")
         }
       </speak>
     </object>
-    <object name="guest 2">
+    <object name="guest 1">
       <inherit name="editor_object" />
       <inherit name="male" />
       <inventoryverbs type="stringlist" />
-      <displayverbs type="stringlist" />
+      <displayverbs type="stringlist">
+        <value>Look at</value>
+      </displayverbs>
       <isroom />
       <description>Wrapped with a bow</description>
       <visible />
       <usedefaultprefix type="boolean">false</usedefaultprefix>
       <prefix type="string"></prefix>
-      <alias>guest 2</alias>
-      <look>A rebel. Huh.</look>
+      <alias>guest 1</alias>
+      <look>Her and her friend are their own little click</look>
       <suffix type="string"></suffix>
       <scenery type="boolean">false</scenery>
       <beforeenter type="script">
@@ -649,30 +659,36 @@
         MakeObjectInvisible
       </enter>
       <speak type="script"><![CDATA[
-        msg ("Stranger: So I was talking to Johnny about Spencer, and he told me that Mikayla dumped him because he went to an Abba concert without her. How petty is that?<br/>Another stranger: I know, it's not like it was Lipps")
         if (player.orderedpizza = false) {
-          msg ("Stranger: \"So I was talking to Johnny about Spencer, and he told me that Mikayla dumped him because he went to an ABBA concert without her. How petty is that?\"<br/><br/>Another stranger: \"I know, it's not like it was Lipps\"")
+          msg ("Stranger: \"So, Brenda, I was talking to that whiny guy behind you Johnny about Spencer, and he told me that Mikayla dumped him because he went to an ABBA concert without her. How petty is that?\"<br/><br/>Brenda: \"I know, Bella, it's not like it was Lipps\"")
+          guest 2.alias = "Johnny"
+          guest 1.alias = "Bella"
+          ShowRoomDescription
         }
         else if (player.disco = false) {
-          msg ("Stranger: \"This pizza is great, but that George Jr. over there is an poophead. Dominic swears he saw him steal Mikayla's Walkman. Guess what showed up for sale in the classifieds the next day?\"<br/><br/>Another stranger: \"The walkman?\"<br/><br/>Stranger: \"No, an ad for Georges pizza.\"")
+          msg ("Bella: \"This pizza is great, but that George Jr. over there is an poophead. Dominic swears he saw him steal Mikayla's Walkman. Guess what showed up for sale in the classifieds the next day?\"<br/><br/>Brenda: \"The walkman?\"<br/><br/>Bella: \"No, an ad for Georges pizza.\"")
+          guest 3.alias = "George Jr."
+          ShowRoomDescription
         }
         else {
-          msg ("Stranger: \"Hey, do you see the way that Johnny is looking at me? Should I ask him to dance?\"<br/><br/>Another stranger: \"What about him and Mikayla?\"<br/><br/>Stranger: \"Who cares.\"")
+          msg ("Bella: \"Hey, do you see the way that Johnny is looking at me? Should I ask him to dance?\"<br/><br/>Brenda: \"What about him and Mikayla?\"<br/><br/>Bella: \"Who cares?\"")
         }
       ]]></speak>
     </object>
-    <object name="guest 3">
+    <object name="guest 2">
       <inherit name="editor_object" />
       <inherit name="female" />
       <inventoryverbs type="stringlist" />
-      <displayverbs type="stringlist" />
+      <displayverbs type="stringlist">
+        <value>Look at</value>
+      </displayverbs>
       <isroom />
       <description>Wrapped with a bow</description>
       <visible />
       <usedefaultprefix type="boolean">false</usedefaultprefix>
       <prefix type="string"></prefix>
-      <alias>guest 3</alias>
-      <look>A rebel. Huh.</look>
+      <alias>guest 2</alias>
+      <look>He's scowling</look>
       <suffix type="string"></suffix>
       <scenery type="boolean">false</scenery>
       <beforeenter type="script">
@@ -686,25 +702,27 @@
           msg ("Stranger: \"Hey, do you even know who's hosting this? You should tell them to order pizza or something.\"<br/><br/>You: \"Haha...I'll let her know\"")
         }
         else if (player.disco = false) {
-          msg ("Stranger: \"Pizza's okay I guess... still boring\"<br/><br/>You: \"Yeah who knows...\"")
+          msg ("Johnny: \"Pizza's okay I guess... still boring\"<br/><br/>You: \"Yeah who knows...\"")
         }
         else {
-          msg ("Stranger: \"I've been to better parties.\"<br/><br/>You: \"What else would you change???\"<br/><br/>Stranger: \"I dunno...\"<br/><br/>You: \"...\"")
+          msg ("Johnny: \"I've been to better parties.\"<br/><br/>You: \"What else would you change???\"<br/><br/>Johnny: \"I dunno...\"<br/><br/>You: \"...\"")
         }
       ]]></speak>
     </object>
-    <object name="guest 4">
+    <object name="guest 3">
       <inherit name="editor_object" />
       <inherit name="female" />
       <inventoryverbs type="stringlist" />
-      <displayverbs type="stringlist" />
+      <displayverbs type="stringlist">
+        <value>Look at</value>
+      </displayverbs>
       <isroom />
       <description>Wrapped with a bow</description>
       <visible />
       <usedefaultprefix type="boolean">false</usedefaultprefix>
-      <prefix type="string"></prefix>
-      <alias>guest 4</alias>
-      <look>A rebel. Huh.</look>
+      <prefix>another </prefix>
+      <alias>guest 3</alias>
+      <look>He's wearing a shirt with a picture of a pizza on it</look>
       <suffix type="string"></suffix>
       <scenery type="boolean">false</scenery>
       <beforeenter type="script">
@@ -721,7 +739,7 @@
           ShowRoomDescription
         }
         else {
-          msg ("Stranger: \"Wow I really love George's Pizza\"<br/><br/>You notice this guy seems really into George's pizza... He seems familiar and you think he may run the 2021 George's Pizza place in 2021...")
+          msg ("George Jr: \"Wow, I really love George's Pizza.\"<br/><br/>You notice this guy seems really into George's pizza...He seems familiar and you think he may run the George's Pizza place you know in 2021...")
         }
       ]]></speak>
     </object>
@@ -738,9 +756,16 @@
       <callpizzaplace type="script"><![CDATA[
         msg ("You place your finger in one of the circles and try to turn it just right. How hard can it be to use this thing?<br/><br/>Pretty hard apparently. After a couple attempts though, you here a voice on the other end.<br/><br/>Phone: Hello, how can I connect your call?<br/><br/>Is this one of those \"operator\" people?<br/><br/>You: \"Can you put me through to George's Pizza?\"<br/><br/>The operator connects you to the pizza place and you order 3 Large pepperoni pizzas...")
         player.orderedpizza = True
-        SetTimeout (2) {
-          msg ("<br/>Some time passes... <br/><br/>The pizza guy makes a great entrance, seemingly lightening the mood a great deal, however something still seems off... You should go see what's wrong...")
+        SetTimeout (1) {
+          msg ("<br/>Some time passes... <br/>")
+          SetTimeout (1) {
+            msg ("The pizza guy makes a great entrance, seemingly lightening the mood a great deal, however something still seems off... You should go see what's wrong...")
+            MakeObjectInvisible (telephone)
+          }
           MakeObjectInvisible (telephone)
+          SetTimeout (1) {
+            ShowRoomDescription
+          }
         }
       ]]></callpizzaplace>
       <verb>
@@ -793,9 +818,10 @@
     <object name="disco location">
       <inherit name="editor_object" />
       <visible type="boolean">false</visible>
-      <alias>setup disco ball</alias>
+      <alias>set up a disco ball</alias>
       <displayverbs type="stringlist" />
       <look>This seems like a perfect spot to setup your disco ball...</look>
+      <usedefaultprefix type="boolean">false</usedefaultprefix>
       <setupdiscoball type="script"><![CDATA[
         RemoveObject (disco ball)
         msg ("You setup the disco ball and turn it on...<br/>")
@@ -810,11 +836,21 @@
           }
         }
       ]]></setupdiscoball>
-      <usedefaultprefix type="boolean">false</usedefaultprefix>
+      <prefix>a place where you could</prefix>
     </object>
     <exit name="head to bed" alias="head to bed" to="Bedroom 1979">
       <visible type="boolean">false</visible>
     </exit>
+    <object name="player">
+      <inherit name="editor_object" />
+      <inherit name="editor_player" />
+      <statusattributes type="stringdictionary" />
+      <attr name="talked_to_mom" type="string"></attr>
+      <orderedpizza type="boolean">false</orderedpizza>
+      <disco type="boolean">false</disco>
+      <attr name="changedtalked_to_mom" type="script">
+      </attr>
+    </object>
   </object>
   <object name="Graduation 2021 post game">
     <inherit name="editor_room" />
@@ -835,16 +871,6 @@
         msg ("Mom: \"Olivia! I can't believe you are finally done with high school!<br/>Did my graduation cap give you good luck like I said it would?\"<br/><br/>You wish you could explain what the cap did without sounding crazy...")
         finish
       ]]></speak>
-    </object>
-    <object name="player">
-      <inherit name="editor_object" />
-      <inherit name="editor_player" />
-      <statusattributes type="stringdictionary" />
-      <attr name="talked_to_mom" type="string"></attr>
-      <orderedpizza type="boolean">false</orderedpizza>
-      <disco type="boolean">false</disco>
-      <attr name="changedtalked_to_mom" type="script">
-      </attr>
     </object>
   </object>
   <verb>
