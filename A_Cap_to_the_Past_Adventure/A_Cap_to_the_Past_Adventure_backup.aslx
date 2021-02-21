@@ -122,15 +122,27 @@
     <exit alias="downstairs" to="Kitchen 2021">
       <prefix type="string"></prefix>
     </exit>
-    <object name="player">
+    <object name="trevor1">
       <inherit name="editor_object" />
-      <inherit name="editor_player" />
-      <statusattributes type="stringdictionary" />
-      <attr name="talked_to_mom" type="string"></attr>
-      <orderedpizza type="boolean">false</orderedpizza>
-      <disco type="boolean">false</disco>
-      <attr name="changedtalked_to_mom" type="script">
-      </attr>
+      <inherit name="male" />
+      <inventoryverbs type="stringlist" />
+      <displayverbs type="stringlist" />
+      <isroom />
+      <description>Wrapped with a bow</description>
+      <visible />
+      <usedefaultprefix type="boolean">false</usedefaultprefix>
+      <prefix>your friend</prefix>
+      <alias>Trevor</alias>
+      <beforeenter type="script">
+        =
+      </beforeenter>
+      <enter type="script">
+        MakeObjectInvisible
+      </enter>
+      <speak type="script"><![CDATA[
+        msg ("Trevor: \"You look a little bit shaken. Are you still up for Alex's thing?\"<br/>You: \"Uhhh, yeah...\"<br/>Trevor: \"There'll be energy drinks there, maybe that will make you feel better.\"")
+      ]]></speak>
+      <look type="string"></look>
     </object>
   </object>
   <object name="Bedroom 1979">
@@ -224,7 +236,7 @@
       <inventoryverbs type="stringlist">
         <value>Look at</value>
       </inventoryverbs>
-      <look>You have never heard of this game before... maybe you should take it to the Game Console and try to play it?</look>
+      <look>You have never heard of this game before...maybe you should take it to the Game Console and try to play it?</look>
     </object>
     <object name="TV">
       <inherit name="editor_object" />
@@ -878,6 +890,16 @@
         msg ("Mom: \"Olivia! I can't believe you are finally done with high school!<br/>Did my graduation cap give you good luck like I said it would?\"<br/><br/>You wish you could explain what the cap did without sounding crazy...")
         finish
       ]]></speak>
+    </object>
+    <object name="player">
+      <inherit name="editor_object" />
+      <inherit name="editor_player" />
+      <statusattributes type="stringdictionary" />
+      <attr name="talked_to_mom" type="string"></attr>
+      <orderedpizza type="boolean">false</orderedpizza>
+      <disco type="boolean">false</disco>
+      <attr name="changedtalked_to_mom" type="script">
+      </attr>
     </object>
   </object>
   <verb>
