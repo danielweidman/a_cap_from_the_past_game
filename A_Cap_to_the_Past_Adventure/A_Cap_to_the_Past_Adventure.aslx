@@ -109,7 +109,7 @@
           msg ("This is an old game console, there is no game cartridge inserted, maybe you should look around for one...")
         }
         this.visited = true
-        ShowRoomDescription()
+        ShowRoomDescription
       </inspect>
       <play type="script">
         if (Got(Cartridge 2021)) {
@@ -130,7 +130,7 @@
       </displayverbs>
       <search type="script">
         msg ("You see school notes and various polaroid photos of your mom and her friends throughout high school... You don't feel like any of this will be useful to entertain yourself...")
-        ShowRoomDescription()
+        ShowRoomDescription
       </search>
     </object>
     <object name="player">
@@ -156,7 +156,7 @@
         MakeObjectVisible (TV)
         MakeObjectVisible (Window)
         MakeObjectVisible (Mirror)
-        ShowRoomDescription()
+        ShowRoomDescription
       </sleep>
     </object>
     <object name="Cartridge 2021">
@@ -203,18 +203,18 @@
       <displayverbs type="stringlist">
         <value>Open drawer</value>
       </displayverbs>
+      <attr name="feature_container" type="boolean">false</attr>
+      <close type="boolean">false</close>
       <opendrawer type="script">
         if (game_console.visited = True) {
           MakeObjectVisible (Cartridge 2021)
           msg ("You see a game cartridge for \"2021\", which you didn't notice before... maybe you should investigate further")
-          ShowRoomDescription()
+          ShowRoomDescription
         }
         else {
           msg ("You aren't sure what you are looking for here... maybe check around the room for some more information")
         }
       </opendrawer>
-      <attr name="feature_container" type="boolean">false</attr>
-      <close type="boolean">false</close>
       <onopen type="script">
         MakeObjectVisible (Cartridge 2021)
       </onopen>
@@ -253,6 +253,7 @@
         msg ("Mom: \"Terri! I can't believe you are finally done with high school!<br/>Did my graduation cap give you good luck like I said it would?\"<br/><br/>You wish you could explain what the cap did without sounding crazy...")
         finish
       ]]></speak>
+      <usedefaultprefix type="boolean">false</usedefaultprefix>
     </object>
   </object>
 </asl>
