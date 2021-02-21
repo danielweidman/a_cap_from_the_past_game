@@ -1,0 +1,709 @@
+<!--Saved by Quest 5.8.6836.13983-->
+<asl version="580">
+  <include ref="English.aslx" />
+  <include ref="Core.aslx" />
+  <game name="A_Cap_to_the_Past_Adventure">
+    <gameid>387c2b10-4356-4f72-bf07-fff359f22da4</gameid>
+    <version>1.0</version>
+    <firstpublished>2021</firstpublished>
+    <start type="script"><![CDATA[
+      msg ("You wake up to the too-familiar sound of your alarm clock. It's 10AM, but that's still way too early for a Saturday. Groggy from the last night, you hit the snooze button and start to doze off.<br/>That is, until your remember one critical fact: today is the day you officially graduate from high school! Four long years and you're finally done. With that on your mind, you suddenly regain your energy and sit up.")
+    ]]></start>
+  </game>
+  <object name="Kitchen 2021">
+    <inherit name="editor_room" />
+    <isroom />
+    <description><![CDATA[The kitchen is spacious, recently remodelled, and fitted with all of the hottest appliances: a stainless steel dishwasher, an "As-seen-on-TV" air fryer, an induction stove, and even a WiFi-connected refrigerator.<br/>There's a small island counter with some tall stools that you eat breakfast at with your parents pretty much every day, and, despite the momentous nature of today, it's no exception.]]></description>
+    <alias>Kitchen</alias>
+    <descprefix>You are in</descprefix>
+    <object name="mom">
+      <inherit name="editor_object" />
+      <inherit name="namedfemale" />
+      <inventoryverbs type="stringlist" />
+      <displayverbs type="stringlist" />
+      <isroom />
+      <description>Wrapped with a bow</description>
+      <visible />
+      <usedefaultprefix type="boolean">false</usedefaultprefix>
+      <prefix>Terri, your </prefix>
+      <beforeenter type="script">
+        =
+      </beforeenter>
+      <enter type="script">
+        MakeObjectInvisible
+      </enter>
+      <speak type="script"><![CDATA[
+        if (this.visited = False) {
+          msg ("Mom: Sweetie, I want you to have this. I know it's old, but I hope you'll make use it just as I did so long ago.<br/><br/>Dad: Oh, right before that rager?<br/><br/>Mom: Hush now. Disco isn't a thing these days anyway. Olivia wouldn't understand.")
+          MakeObjectVisible (gift)
+          ShowRoomDescription
+          this.visited = true
+        }
+        else if (gift.visible = True) {
+          msg ("Mom: Come on, open it.")
+        }
+        else {
+          msg ("Mom: You can take my car to the ceremony. We'll meet you back here when you're done to have a lovely dinner, then you can go hang out with your friends.")
+        }
+      ]]></speak>
+    </object>
+    <object name="gift">
+      <inherit name="editor_object" />
+      <visible type="boolean">false</visible>
+      <displayverbs type="stringlist">
+        <value>Open it</value>
+        <value>Look at</value>
+      </displayverbs>
+      <inventoryverbs type="stringlist" />
+      <attr name="feature_usegive" type="boolean">false</attr>
+      <attr name="feature_startscript" type="boolean">false</attr>
+      <usestandardverblist />
+      <look>It's a small square shaped box wrapped with leftover snowflake wrapping and a red ribbon.</look>
+      <openit type="script"><![CDATA[
+        msg ("It's an old graduation cap--not that it's really any different from the ones that your school tries to make every student each year.<br/><br/>You: Oh, it's...neat<br/><br/>Mom: I think you should wear it to the ceremony! Put it on!<br/><br/>You: Do I have to?<br/><br/>Mom: Yes. I'm sure all of your friends will think it's so cool.<br/><br/>You begrudingly place he hat on your head.")
+        create exit ("graduation", Kitchen 2021, Graduation 2021)
+        MakeObjectInvisible (gift)
+        msg (FormatExitList("You can go", ScopeExits(), "or", ", "))
+      ]]></openit>
+      <attr name="_initialise_" type="script">
+      </attr>
+    </object>
+    <object name="dad">
+      <inherit name="editor_object" />
+      <inherit name="male" />
+      <inventoryverbs type="stringlist" />
+      <displayverbs type="stringlist" />
+      <isroom />
+      <description>Wrapped with a bow</description>
+      <visible />
+      <usedefaultprefix type="boolean">false</usedefaultprefix>
+      <prefix>Matt, your </prefix>
+      <beforeenter type="script">
+        =
+      </beforeenter>
+      <enter type="script">
+        MakeObjectInvisible
+      </enter>
+      <speak type="script">
+        if (mom.visited = False) {
+          msg ("Dad: Good morning! I think your mom has something for you.")
+          this.visited = true
+        }
+        else {
+          msg ("You better get a move on. The school said you need to get there two hours early.")
+        }
+      </speak>
+    </object>
+  </object>
+  <verb>
+    <property>talked_to</property>
+    <pattern>talked_to</pattern>
+    <defaultexpression>"You can't talked_to " + object.article + "."</defaultexpression>
+  </verb>
+  <verb>
+    <property>openit</property>
+    <pattern>open it</pattern>
+    <defaultexpression>"You can't open it " + object.article + "."</defaultexpression>
+  </verb>
+  <object name="Bedroom 2021">
+    <inherit name="editor_room" />
+    <alias>Bedroom</alias>
+    <exit alias="downstairs" to="Kitchen 2021">
+      <prefix type="string"></prefix>
+    </exit>
+    <object name="player">
+      <inherit name="editor_object" />
+      <inherit name="editor_player" />
+      <statusattributes type="stringdictionary" />
+      <attr name="talked_to_mom" type="string"></attr>
+      <attr name="changedtalked_to_mom" type="script">
+      </attr>
+    </object>
+  </object>
+  <object name="Bedroom 1979">
+    <inherit name="editor_room" />
+    <alias>Bedroom</alias>
+    <description type="string"></description>
+    <firstenter type="script">
+      msg ("You had an awesome time at the party, now its getting late and it's time for bed... This room is oddly familiar, because as you know your mom used to live in your room when she was younger...")
+    </firstenter>
+    <object name="game_console">
+      <inherit name="container_open" />
+      <inherit name="editor_object" />
+      <visible type="boolean">false</visible>
+      <displayverbs type="stringlist">
+        <value>Inspect</value>
+        <value>Play</value>
+      </displayverbs>
+      <attr name="feature_container" type="boolean">false</attr>
+      <inventoryverbs type="stringlist">
+        <value>Look at</value>
+        <value>Use</value>
+        <value>Drop</value>
+      </inventoryverbs>
+      <isroom type="boolean">false</isroom>
+      <scenery type="boolean">false</scenery>
+      <look>A nightstand.</look>
+      <alias>Game Console</alias>
+      <inspect type="script">
+        if (Got(Cartridge 2021)) {
+          msg ("This is an old game console, maybe you should try playing it with your new game...")
+        }
+        else {
+          msg ("This is an old game console, there is no game cartridge inserted, maybe you should look around for one...")
+        }
+        this.visited = true
+        ShowRoomDescription
+      </inspect>
+      <play type="script">
+        if (Got(Cartridge 2021)) {
+          msg ("You insert the cartridge and the game loads... after pressing play you suddenly get dizzy again, much like at graduation. Once you finally steady yourself and look around you realize you aren't in the bedroom anymore...")
+          RemoveObject (Cartridge 2021)
+          MoveObject (player, Graduation 2021 post game)
+        }
+        else {
+          msg ("There is no game cartridge inserted... you cannot play without a cartridge...")
+        }
+      </play>
+    </object>
+    <object name="Desk">
+      <inherit name="editor_object" />
+      <visible type="boolean">false</visible>
+      <displayverbs type="stringlist">
+        <value>Search</value>
+      </displayverbs>
+      <search type="script">
+        msg ("You see school notes and various polaroid photos of your mom and her friends throughout high school... You don't feel like any of this will be useful to entertain yourself...")
+        ShowRoomDescription
+      </search>
+    </object>
+    <object name="Bed">
+      <inherit name="editor_object" />
+      <usestandardverblist type="boolean">false</usestandardverblist>
+      <displayverbs type="stringlist">
+        <value>Sleep</value>
+      </displayverbs>
+      <sleep type="script">
+        msg ("You had one too many energy drinks at the party... you should find something to do until you are tired enough to sleep...")
+        MakeObjectVisible (Desk)
+        MakeObjectVisible (Nightstand)
+        MakeObjectVisible (game_console)
+        MakeObjectInvisible (Bed)
+        MakeObjectVisible (TV)
+        MakeObjectVisible (Window)
+        MakeObjectVisible (Mirror)
+        ShowRoomDescription
+      </sleep>
+    </object>
+    <object name="Cartridge 2021">
+      <inherit name="editor_object" />
+      <visible type="boolean">false</visible>
+      <displayverbs type="stringlist">
+        <value>Take</value>
+      </displayverbs>
+      <take />
+      <takemsg>you grab the game cartridge... maybe you should play it</takemsg>
+      <drop type="boolean">false</drop>
+      <inventoryverbs type="stringlist">
+        <value>Look at</value>
+      </inventoryverbs>
+      <look>You have never heard of this game before... maybe you should take it to the Game Console and try to play it?</look>
+    </object>
+    <object name="TV">
+      <inherit name="editor_object" />
+      <visible type="boolean">false</visible>
+      <displayverbs type="stringlist">
+        <value>Look at</value>
+      </displayverbs>
+      <look><![CDATA[You are surprised that your mom had her own TV in 1979...<br/>This is small and you have no idea how to do anything except turn it on...<br/>It looks like the {object:game_console} is connected to it already though...]]></look>
+    </object>
+    <object name="Mirror">
+      <inherit name="editor_object" />
+      <visible type="boolean">false</visible>
+      <displayverbs type="stringlist">
+        <value>Look at</value>
+      </displayverbs>
+      <look>You see your mom looking back at you in the mirror... it's an interesting experience and you feel like you should avoid looking at yourself as your young mom...</look>
+    </object>
+    <object name="Window">
+      <inherit name="editor_object" />
+      <visible type="boolean">false</visible>
+      <look><![CDATA[You look out the window... <br/>It's dark already but you can see the  familiar but different street you grew up on... the trees seem freshly planted and the street lights are different... <br/>but it's definitely the same street you grew up on]]></look>
+      <displayverbs type="stringlist">
+        <value>Look at</value>
+      </displayverbs>
+    </object>
+    <object name="Nightstand">
+      <inherit name="editor_object" />
+      <visible type="boolean">false</visible>
+      <displayverbs type="stringlist">
+        <value>Open drawer</value>
+      </displayverbs>
+      <attr name="feature_container" type="boolean">false</attr>
+      <close type="boolean">false</close>
+      <opendrawer type="script">
+        if (game_console.visited = True) {
+          MakeObjectVisible (Cartridge 2021)
+          msg ("You see a game cartridge for \"2021\", which you didn't notice before... maybe you should investigate further")
+          ShowRoomDescription
+        }
+        else {
+          msg ("You aren't sure what you are looking for here... maybe check around the room for some more information")
+        }
+      </opendrawer>
+      <onopen type="script">
+        MakeObjectVisible (Cartridge 2021)
+      </onopen>
+    </object>
+  </object>
+  <verb>
+    <property>sleep</property>
+    <pattern>sleep</pattern>
+    <defaultexpression>"You can't sleep " + object.article + "."</defaultexpression>
+  </verb>
+  <verb>
+    <property>opendrawer</property>
+    <pattern>open drawer</pattern>
+    <defaultexpression>"You can't open drawer " + object.article + "."</defaultexpression>
+  </verb>
+  <verb>
+    <property>inspect</property>
+    <pattern>inspect</pattern>
+    <defaultexpression>"You can't inspect " + object.article + "."</defaultexpression>
+  </verb>
+  <verb>
+    <property>play</property>
+    <pattern>play</pattern>
+    <defaultexpression>"You can't play " + object.article + "."</defaultexpression>
+  </verb>
+  <object name="Graduation 2021">
+    <alias>graduation ceremony</alias>
+    <usedefaultprefix type="boolean">false</usedefaultprefix>
+    <prefix>the </prefix>
+    <descprefix>You are at</descprefix>
+    <exitslistprefix>Maybe you should </exitslistprefix>
+    <firstenter type="script"><![CDATA[
+      msg ("It's a warm day. You see all of your classmates hanging around talking.<br/><br/>Trevor: Hey, nice hat!<br/>You: Really?<br/>Trevorl: Yeah, it's like everyone elses, but it doesn't have that shiny, plastic-y look to it.<br/><br/>Maybe you won't try and get rid of it after all...<br/><br/>Principal Garcia: Now, I know you all just want to get the ceremony over with, but your families all want you to look your best. That's why you're gonna need to spend the next two hours rehearsing. Everybody line up by......<br/><br/>Everyone groans and begrudingly follows her directions as she makes them spend the last 120 minutes of their high school careers learing how to stand up and walk across a field.<br/><br/>Eventually parents start showing up, the school band plays \"Land of hope and glory,\" and you, and everyone else, do exactly what Prinicipal Garcia told you to do.<br/><br/>Now comes the part you've been waiting for: the time when everyone flips the tassel on their graduation caps to signify their achievement.")
+    ]]></firstenter>
+    <object name="tassel">
+      <inherit name="editor_object" />
+      <displayverbs type="stringlist" />
+      <inventoryverbs type="stringlist" />
+      <look>It's on your head--you can't see it that well.</look>
+      <flip type="script"><![CDATA[
+        msg ("You feel tired, for some reason")
+        SetTimeout (1) {
+          msg ("And dizzy")
+          SetTimeout (2) {
+            msg ("Really dizzy...")
+            SetTimeout (1) {
+              msg ("Your vision starts to blur")
+              SetTimeout (1) {
+                msg ("...and fade a bit")
+                SetTimeout (1) {
+                  ClearScreen
+                  msg ("You come to. It's lucky you didn't faint. Or worse, throw up. Nobody seems to have noticed anything.<br/><br/>Something does feel a little bit different though...")
+                  create exit ("Look around", Graduation 2021, Graduation 1979)
+                  msg (FormatExitList("Maybe you should", ScopeExits(), "or", ", "))
+                }
+              }
+            }
+          }
+        }
+      ]]></flip>
+    </object>
+    <object name="trevor">
+      <inherit name="editor_object" />
+      <inherit name="male" />
+      <inventoryverbs type="stringlist" />
+      <displayverbs type="stringlist" />
+      <isroom />
+      <description>Wrapped with a bow</description>
+      <visible />
+      <usedefaultprefix type="boolean">false</usedefaultprefix>
+      <prefix>your friend</prefix>
+      <alias>Trevor</alias>
+      <beforeenter type="script">
+        =
+      </beforeenter>
+      <enter type="script">
+        MakeObjectInvisible
+      </enter>
+      <speak type="script"><![CDATA[
+        msg ("Trevor: I hope you're going to Alex's part tonight.<br/>You: You bet.")
+      ]]></speak>
+    </object>
+  </object>
+  <verb>
+    <property>flip</property>
+    <pattern>flip</pattern>
+    <defaultexpression>"You can't flip " + object.article + "."</defaultexpression>
+  </verb>
+  <object name="Graduation 1979">
+    <inherit name="editor_room" />
+    <alias>graduation ceremony</alias>
+    <usedefaultprefix type="boolean">false</usedefaultprefix>
+    <prefix>the </prefix>
+    <descprefix>You are at</descprefix>
+    <firstenter type="script">
+      msg ("There's a weird smell--is it smoking or cigarettes?")
+    </firstenter>
+    <object name="maggie">
+      <inherit name="editor_object" />
+      <inherit name="female" />
+      <inventoryverbs type="stringlist" />
+      <displayverbs type="stringlist">
+        <value>Look at</value>
+      </displayverbs>
+      <isroom />
+      <description>Wrapped with a bow</description>
+      <visible />
+      <usedefaultprefix type="boolean">false</usedefaultprefix>
+      <prefix type="string"></prefix>
+      <alias>rebellious stranger</alias>
+      <look>A rebel. Huh.</look>
+      <suffix>who wore a denim jacket over her robes</suffix>
+      <scenery type="boolean">false</scenery>
+      <beforeenter type="script">
+        =
+      </beforeenter>
+      <enter type="script">
+        MakeObjectInvisible
+      </enter>
+      <speak type="script">
+        this.visited = true
+        if (shannon.visited = true) {
+          if (ian.visited = true) {
+            if (jose.visited = true) {
+              msg ("Ready to go? Follow me.")
+              create exit ("in the car", Graduation 1979, Kitchen 1979)
+              msg (FormatExitList("You can go", ScopeExits(), "or", ", "))
+            }
+          }
+        }
+        else {
+          msg ("Stranger: You said your parents took their car with them? I'll give you a ride back.")
+        }
+      </speak>
+    </object>
+    <object name="shannon">
+      <inherit name="editor_object" />
+      <inherit name="namedfemale" />
+      <inventoryverbs type="stringlist" />
+      <displayverbs type="stringlist">
+        <value>Look at</value>
+      </displayverbs>
+      <isroom />
+      <description>Wrapped with a bow</description>
+      <visible />
+      <usedefaultprefix type="boolean">false</usedefaultprefix>
+      <prefix type="string"></prefix>
+      <alias>mysterious stranger</alias>
+      <look>Something about her accessories just screams "retro". Does she shop exclusively at consignment stores or something?</look>
+      <suffix>sitting right where Trevor was</suffix>
+      <scenery type="boolean">false</scenery>
+      <beforeenter type="script">
+        =
+      </beforeenter>
+      <enter type="script">
+        MakeObjectInvisible
+      </enter>
+      <speak type="script">
+        msg ("Stranger: Hiya Terri, I'm pumped for your thing tonight--so convenient that your parents are out of town! (***question**)")
+        this.visited = true
+        if (shannon.visited = true and ian.visited = true and jose.visited = true) {
+          msg ("That person who offered you a ride back looks like she has something to say.")
+        }
+      </speak>
+    </object>
+    <object name="jose">
+      <inherit name="editor_object" />
+      <inherit name="namedmale" />
+      <inventoryverbs type="stringlist" />
+      <displayverbs type="stringlist">
+        <value>Look at</value>
+      </displayverbs>
+      <isroom />
+      <description>Wrapped with a bow</description>
+      <visible />
+      <usedefaultprefix type="boolean">false</usedefaultprefix>
+      <prefix type="string"></prefix>
+      <alias>another stranger</alias>
+      <look>Is that a calculator watch on his wrist?</look>
+      <suffix> on your left</suffix>
+      <scenery type="boolean">false</scenery>
+      <beforeenter type="script">
+        =
+      </beforeenter>
+      <enter type="script">
+        MakeObjectInvisible
+      </enter>
+      <speak type="script">
+        msg ("So Terrs, what, there are like 30 people coming? (**ask question**)")
+        this.visited = true
+        if (shannon.visited = true and ian.visited = true and jose.visited = true) {
+          msg ("That person who offered you a ride back looks like she has something to say.")
+        }
+      </speak>
+    </object>
+    <object name="ian">
+      <inherit name="editor_object" />
+      <inherit name="namedmale" />
+      <inventoryverbs type="stringlist" />
+      <displayverbs type="stringlist">
+        <value>Look at</value>
+      </displayverbs>
+      <isroom />
+      <description>Wrapped with a bow</description>
+      <visible />
+      <usedefaultprefix type="boolean">false</usedefaultprefix>
+      <prefix type="string"></prefix>
+      <alias>stangely-familiar stranger</alias>
+      <look>Woah, his face looks just like Uncle Ian's</look>
+      <suffix>sitting behind you</suffix>
+      <scenery type="boolean">false</scenery>
+      <beforeenter type="script">
+        =
+      </beforeenter>
+      <enter type="script">
+        MakeObjectInvisible
+      </enter>
+      <speak type="script">
+        msg ("Stranger: Tear-bear! Don't worry about the drinks--I got a hook up at the energy drink bottling center")
+        this.visited = true
+        if (shannon.visited = true and ian.visited = true and jose.visited = true) {
+          msg ("That person who offered you a ride back looks like she has something to say.")
+        }
+      </speak>
+    </object>
+  </object>
+  <object name="Kitchen 1979">
+    <inherit name="editor_room" />
+    <alias>Kitchen</alias>
+    <usedefaultprefix type="boolean">false</usedefaultprefix>
+    <prefix>the </prefix>
+    <descprefix>You are at</descprefix>
+    <firstenter type="script"><![CDATA[
+      msg ("You enter your kitchen, or what looks a little bit like it anyway. Gone are your smart devices and cooking gadgetry--their place has been taken by an old gas-burning stove and wobbly table.<br/><br/>Maggie: What's going on with you? It seems like you've seen a ghost. Good thing your best friend Maggie is here to help you out. What would you do with out me.<br/><br/>You: I don't know<br/><br/>Maggie:  Well, it sounds like there's someone at the door. You better go open it.")
+    ]]></firstenter>
+    <object name="maggie at party">
+      <inherit name="editor_object" />
+      <inherit name="female" />
+      <inventoryverbs type="stringlist" />
+      <displayverbs type="stringlist" />
+      <isroom />
+      <description>Wrapped with a bow</description>
+      <visible />
+      <usedefaultprefix type="boolean">false</usedefaultprefix>
+      <prefix type="string"></prefix>
+      <alias>Maggie</alias>
+      <look>A rebel. Huh.</look>
+      <suffix type="string"></suffix>
+      <scenery type="boolean">false</scenery>
+      <beforeenter type="script">
+        =
+      </beforeenter>
+      <enter type="script">
+        MakeObjectInvisible
+      </enter>
+      <speak type="script">
+        msg ("Maggie: Get the door!")
+      </speak>
+    </object>
+    <exit alias="answer the door" to="Filled lliving room 1979" />
+  </object>
+  <object name="Filled lliving room 1979">
+    <inherit name="editor_room" />
+    <alias>Living room</alias>
+    <usedefaultprefix type="boolean">false</usedefaultprefix>
+    <prefix>the </prefix>
+    <descprefix>You are at</descprefix>
+    <isroom />
+    <firstenter type="script"><![CDATA[
+      msg ("You make your way towards the door (**make this an actual action**) and answer it. You recognize who you've named uncle-Ian-guy in your head, but he's with a bunch of other strangers. Their clothes are all vintage style. (**ask if let them in**). You let them in (**make verb***). Soon after, another crowd streams in. Are you supposed to be throwing a party or something?<br/><br/>You go into your living room.<br/>It's got a shaggy rug and a tube TV with rabbit-ears, which would seem weird under different circumstanced. The room is pretty crowded now.")
+    ]]></firstenter>
+    <object name="ian at party1">
+      <inherit name="editor_object" />
+      <inherit name="namedmale" />
+      <inventoryverbs type="stringlist" />
+      <displayverbs type="stringlist" />
+      <isroom />
+      <description>Wrapped with a bow</description>
+      <visible />
+      <usedefaultprefix type="boolean">false</usedefaultprefix>
+      <prefix type="string"></prefix>
+      <alias>uncle-Ian-guy</alias>
+      <look>Woah, his face looks just like Uncle Ian's</look>
+      <suffix>sitting behind you</suffix>
+      <scenery type="boolean">false</scenery>
+      <beforeenter type="script">
+        =
+      </beforeenter>
+      <enter type="script">
+        MakeObjectInvisible
+      </enter>
+      <speak type="script">
+        msg ("Stranger: I wish there was something solid to go with these sugary energy drinks we're all cracking open")
+      </speak>
+    </object>
+    <object name="maggie at party1">
+      <inherit name="editor_object" />
+      <inherit name="female" />
+      <inventoryverbs type="stringlist" />
+      <displayverbs type="stringlist" />
+      <isroom />
+      <description>Wrapped with a bow</description>
+      <visible />
+      <usedefaultprefix type="boolean">false</usedefaultprefix>
+      <prefix type="string"></prefix>
+      <alias>Maggie</alias>
+      <look>A rebel. Huh.</look>
+      <suffix type="string"></suffix>
+      <scenery type="boolean">false</scenery>
+      <beforeenter type="script">
+        =
+      </beforeenter>
+      <enter type="script">
+        MakeObjectInvisible
+      </enter>
+      <speak type="script">
+        msg ("Maggie: No offense, but this doesn't really live up to your typical rockin party standards...where's the food? Where's the dancing?")
+      </speak>
+    </object>
+    <object name="guest 1">
+      <inherit name="editor_object" />
+      <inherit name="female" />
+      <inventoryverbs type="stringlist" />
+      <displayverbs type="stringlist" />
+      <isroom />
+      <description>Wrapped with a bow</description>
+      <visible />
+      <usedefaultprefix type="boolean">false</usedefaultprefix>
+      <prefix type="string"></prefix>
+      <alias>guest 1</alias>
+      <look>A rebel. Huh.</look>
+      <suffix type="string"></suffix>
+      <scenery type="boolean">false</scenery>
+      <beforeenter type="script">
+        =
+      </beforeenter>
+      <enter type="script">
+        MakeObjectInvisible
+      </enter>
+      <speak type="script">
+        msg ("Stranger: I'm hungry. I thought there would be snacks?")
+      </speak>
+    </object>
+    <object name="guest 2">
+      <inherit name="editor_object" />
+      <inherit name="male" />
+      <inventoryverbs type="stringlist" />
+      <displayverbs type="stringlist" />
+      <isroom />
+      <description>Wrapped with a bow</description>
+      <visible />
+      <usedefaultprefix type="boolean">false</usedefaultprefix>
+      <prefix type="string"></prefix>
+      <alias>guest 2</alias>
+      <look>A rebel. Huh.</look>
+      <suffix type="string"></suffix>
+      <scenery type="boolean">false</scenery>
+      <beforeenter type="script">
+        =
+      </beforeenter>
+      <enter type="script">
+        MakeObjectInvisible
+      </enter>
+      <speak type="script"><![CDATA[
+        msg ("Stranger: So I was talking to Johnny about Spencer, and he told me that Mikayla dumped him because he went to an Abba concert without her. How petty is that?<br/>Another stranger: I know, it's not like it was Lipps")
+      ]]></speak>
+    </object>
+    <object name="guest 3">
+      <inherit name="editor_object" />
+      <inherit name="female" />
+      <inventoryverbs type="stringlist" />
+      <displayverbs type="stringlist" />
+      <isroom />
+      <description>Wrapped with a bow</description>
+      <visible />
+      <usedefaultprefix type="boolean">false</usedefaultprefix>
+      <prefix type="string"></prefix>
+      <alias>guest 3</alias>
+      <look>A rebel. Huh.</look>
+      <suffix type="string"></suffix>
+      <scenery type="boolean">false</scenery>
+      <beforeenter type="script">
+        =
+      </beforeenter>
+      <enter type="script">
+        MakeObjectInvisible
+      </enter>
+      <speak type="script"><![CDATA[
+        msg ("Stranger: Hey, do you even know who's hosting this? You should tell them to order pizza or something.<br/>You: Haha...I'll let her know")
+      ]]></speak>
+    </object>
+    <object name="guest 4">
+      <inherit name="editor_object" />
+      <inherit name="female" />
+      <inventoryverbs type="stringlist" />
+      <displayverbs type="stringlist" />
+      <isroom />
+      <description>Wrapped with a bow</description>
+      <visible />
+      <usedefaultprefix type="boolean">false</usedefaultprefix>
+      <prefix type="string"></prefix>
+      <alias>guest 4</alias>
+      <look>A rebel. Huh.</look>
+      <suffix type="string"></suffix>
+      <scenery type="boolean">false</scenery>
+      <beforeenter type="script">
+        =
+      </beforeenter>
+      <enter type="script">
+        MakeObjectInvisible
+      </enter>
+      <speak type="script">
+        msg ("Stranger: Boy, my stomach is empty after 3 hours sitting around.")
+      </speak>
+    </object>
+    <object name="telephone">
+      <inherit name="editor_object" />
+      <alias>Rotary phone</alias>
+      <look>It's one of those old rotary phones. The ones where you move a circle with your finger?</look>
+      <displayverbs type="stringlist">
+        <value>Look at</value>
+        <value>Call pizza place</value>
+      </displayverbs>
+      <inventoryverbs type="stringlist" />
+      <callpizzaplace type="script"><![CDATA[
+        msg ("You place your finger in one of the circles and try to turn it just right. How hard can it be to use this thing?<br/><br/>Pretty hard apparently. After a couple attempts though, you here a voice on the other end.<br/><br/>Phone: Hello, how can I connect your call?<br/><br/>Is this one of those \"operator\" people?")
+      ]]></callpizzaplace>
+      <verb>
+        <property>dial</property>
+        <pattern>dial</pattern>
+        <defaultexpression>"You can't dial " + object.article + "."</defaultexpression>
+      </verb>
+      <verb>
+        <property>callpizzaplace</property>
+        <pattern>call pizza place</pattern>
+        <defaultexpression>"You can't call pizza place " + object.article + "."</defaultexpression>
+      </verb>
+    </object>
+  </object>
+  <object name="Graduation 2021 post game">
+    <inherit name="editor_room" />
+    <alias>Graduation</alias>
+    <descprefix>You are at</descprefix>
+    <usedefaultprefix type="boolean">false</usedefaultprefix>
+    <object name="mom_postgrad">
+      <inherit name="editor_object" />
+      <alias>mom</alias>
+      <displayverbs type="stringlist" />
+      <usedefaultprefix type="boolean">false</usedefaultprefix>
+      <speak type="script"><![CDATA[
+        msg ("Mom: \"Terri! I can't believe you are finally done with high school!<br/>Did my graduation cap give you good luck like I said it would?\"<br/><br/>You wish you could explain what the cap did without sounding crazy...")
+        finish
+      ]]></speak>
+    </object>
+  </object>
+</asl>

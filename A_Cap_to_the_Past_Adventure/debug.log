@@ -1,1 +1,7 @@
 [0220/153020:ERROR:renderer_main.cc(207)] Running without renderer sandbox
+[0220/205918:ERROR:renderer_main.cc(207)] Running without renderer sandbox
+[0220/205919:ERROR:cache_util_win.cc(20)] Unable to move the cache: 5
+[0220/205919:ERROR:cache_util.cc(132)] Unable to move cache folder C:\Users\danie\AppData\Local\Temp\GPUCache to C:\Users\danie\AppData\Local\Temp\old_GPUCache_000
+[0220/205919:ERROR:cache_creator.cc(132)] Unable to create cache
+[0220/205919:ERROR:shader_disk_cache.cc(588)] Shader Cache Creation failed: -2
+[0220/210254:WARNING:message_in_transit_queue.cc(18)] Destroying nonempty message queue
