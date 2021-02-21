@@ -128,7 +128,7 @@
     <alias>Bedroom</alias>
     <description type="string"></description>
     <firstenter type="script">
-      msg ("You had an awesome time at the party, now its getting late and it's time for bed... This room is oddly familiar, because as you know your mom used to live in your room when she was younger...")
+      msg ("You had an awesome time at the party, now its getting late and it's time for bed... This room is oddly familiar, because it's your room... just in 1979...")
     </firstenter>
     <beforefirstenter type="script">
       ClearScreen
@@ -170,7 +170,6 @@
             SetTimeout (1) {
               msg ("Really dizzy...")
               SetTimeout (2) {
-                ClearScreen
                 MoveObject (player, Graduation 2021 post game)
               }
             }
@@ -876,6 +875,7 @@
     <firstenter type="script">
     </firstenter>
     <beforefirstenter type="script">
+      ClearScreen
     </beforefirstenter>
     <object name="mom_postgrad">
       <inherit name="editor_object" />
