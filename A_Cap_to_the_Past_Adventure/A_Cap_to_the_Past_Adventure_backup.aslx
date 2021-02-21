@@ -3,7 +3,7 @@
   <include ref="English.aslx" />
   <include ref="Core.aslx" />
   <game name="A Cap to the Past Adventure">
-    <gameid>387c2b10-4356-4f72-bf07-fff359f22da4</gameid>
+    <gameid>54bbc6dd-ff20-4226-aac3-c6e0b11e09ea</gameid>
     <version>1.0</version>
     <firstpublished>2021</firstpublished>
     <author>Tyler Pelton and Daniel Weidman</author>
@@ -117,16 +117,6 @@
     <exit alias="downstairs" to="Kitchen 2021">
       <prefix type="string"></prefix>
     </exit>
-    <object name="player">
-      <inherit name="editor_object" />
-      <inherit name="editor_player" />
-      <statusattributes type="stringdictionary" />
-      <attr name="talked_to_mom" type="string"></attr>
-      <orderedpizza type="boolean">false</orderedpizza>
-      <disco type="boolean">false</disco>
-      <attr name="changedtalked_to_mom" type="script">
-      </attr>
-    </object>
   </object>
   <object name="Bedroom 1979">
     <inherit name="editor_room" />
@@ -392,16 +382,22 @@
         if (shannon.visited = true) {
           if (ian.visited = true) {
             if (jose.visited = true) {
-              msg ("Stranger: \"Ready to go? Follow me.\"")
-              create exit ("in the car", Graduation 1979, Kitchen 1979)
-              msg (FormatExitList("You can go", ScopeExits(), "or", ", "))
+              this.ready to go = true
             }
           }
+        }
+        else {
+        }
+        if (this.ready to go = true) {
+          msg ("Stranger: \"Ready to go? Follow me.\"")
+          create exit ("in the car", Graduation 1979, Kitchen 1979)
+          msg (FormatExitList("You can go", ScopeExits(), "or", ", "))
         }
         else {
           msg ("Stranger: \"You said your parents took their car with them? I'll give you a ride back.\"")
         }
       </speak>
+      <attr name="ready to go" type="boolean">false</attr>
     </object>
     <object name="shannon">
       <inherit name="editor_object" />
@@ -492,6 +488,16 @@
           msg ("That person who offered you a ride back looks like she has something to say.")
         }
       </speak>
+    </object>
+    <object name="player">
+      <inherit name="editor_object" />
+      <inherit name="editor_player" />
+      <statusattributes type="stringdictionary" />
+      <attr name="talked_to_mom" type="string"></attr>
+      <orderedpizza type="boolean">false</orderedpizza>
+      <disco type="boolean">false</disco>
+      <attr name="changedtalked_to_mom" type="script">
+      </attr>
     </object>
   </object>
   <object name="Kitchen 1979">
