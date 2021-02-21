@@ -2,10 +2,12 @@
 <asl version="580">
   <include ref="English.aslx" />
   <include ref="Core.aslx" />
-  <game name="A_Cap_to_the_Past_Adventure">
+  <game name="A Cap to the Past Adventure">
     <gameid>387c2b10-4356-4f72-bf07-fff359f22da4</gameid>
     <version>1.0</version>
     <firstpublished>2021</firstpublished>
+    <author>Tyler Pelton and Daniel Weidman</author>
+    <turnoffcompass />
     <start type="script"><![CDATA[
       msg ("You wake up to the too-familiar sound of your alarm clock. It's 10AM, but that's still way too early for a Saturday. Groggy from the last night, you hit the snooze button and start to doze off.<br/>That is, until your remember one critical fact: today is the day you officially graduate from high school! Four long years and you're finally done. With that on your mind, you suddenly regain your energy and sit up.")
     ]]></start>
@@ -113,25 +115,17 @@
     <exit alias="downstairs" to="Kitchen 2021">
       <prefix type="string"></prefix>
     </exit>
-    <object name="player">
-      <inherit name="editor_object" />
-      <inherit name="editor_player" />
-      <statusattributes type="stringdictionary" />
-      <attr name="talked_to_mom" type="string"></attr>
-      <attr name="changedtalked_to_mom" type="script">
-      </attr>
-      <orderedpizza type="boolean">false</orderedpizza>
-      <disco type="boolean">false</disco>
-    </object>
   </object>
   <object name="Bedroom 1979">
     <inherit name="editor_room" />
     <alias>Bedroom</alias>
     <description type="string"></description>
     <firstenter type="script">
-      ClearScreen
       msg ("You had an awesome time at the party, now its getting late and it's time for bed... This room is oddly familiar, because as you know your mom used to live in your room when she was younger...")
     </firstenter>
+    <beforefirstenter type="script">
+      ClearScreen
+    </beforefirstenter>
     <object name="game_console">
       <inherit name="container_open" />
       <inherit name="editor_object" />
@@ -288,7 +282,7 @@
     <descprefix>You are at</descprefix>
     <exitslistprefix>Maybe you should </exitslistprefix>
     <firstenter type="script"><![CDATA[
-      msg ("It's a warm day. You see all of your classmates hanging around talking.<br/><br/>Trevor: Hey, nice hat!<br/>You: Really?<br/>Trevorl: Yeah, it's like everyone elses, but it doesn't have that shiny, plastic-y look to it.<br/><br/>Maybe you won't try and get rid of it after all...<br/><br/>Principal Garcia: Now, I know you all just want to get the ceremony over with, but your families all want you to look your best. That's why you're gonna need to spend the next two hours rehearsing. Everybody line up by......<br/><br/>Everyone groans and begrudingly follows her directions as she makes them spend the last 120 minutes of their high school careers learing how to stand up and walk across a field.<br/><br/>Eventually parents start showing up, the school band plays \"Land of hope and glory,\" and you, and everyone else, do exactly what Prinicipal Garcia told you to do.<br/><br/>Now comes the part you've been waiting for: the time when everyone flips the tassel on their graduation caps to signify their achievement.")
+      msg ("It's a warm day. You see all of your classmates hanging around talking.<br/><br/>Trevor: Hey, nice hat!<br/>You: Really?<br/>Trevorl: Yeah, it's like everyone elses, but it doesn't have that shiny, plastic-y look to it.<br/><br/>Maybe you won't try and get rid of it after all...<br/><br/>Principal Garcia: Now, I know you all just want to get the ceremony over with, but your families all want you to look your best. That's why you're gonna need to spend the next two hours rehearsing. Everybody line up by......<br/><br/>Everyone groans and begrudingly follows her directions as she makes them spend the last 120 minutes of their high school careers learing how to stand up and walk across a field.<br/><br/>Eventually parents start showing up, the school band plays \"Land of hope and glory,\" and you, and everyone else, do exactly what Principal Garcia told you to do.<br/><br/>Now comes the part you've been waiting for: the time when everyone flips the tassel on their graduation caps to signify their achievement.")
     ]]></firstenter>
     <beforefirstenter type="script">
       ClearScreen
@@ -338,7 +332,7 @@
         MakeObjectInvisible
       </enter>
       <speak type="script"><![CDATA[
-        msg ("Trevor: I hope you're going to Alex's part tonight.<br/>You: You bet.")
+        msg ("Trevor: I hope you're going to Alex's party tonight.<br/>You: You bet.")
       ]]></speak>
     </object>
   </object>
@@ -740,6 +734,7 @@
         <value>Call pizza place</value>
       </displayverbs>
       <inventoryverbs type="stringlist" />
+      <visible type="boolean">false</visible>
       <callpizzaplace type="script"><![CDATA[
         msg ("You place your finger in one of the circles and try to turn it just right. How hard can it be to use this thing?<br/><br/>Pretty hard apparently. After a couple attempts though, you here a voice on the other end.<br/><br/>Phone: Hello, how can I connect your call?<br/><br/>Is this one of those \"operator\" people?<br/><br/>You: \"Can you put me through to George's Pizza?\"<br/><br/>The operator connects you to the pizza place and you order 3 Large pepperoni pizzas...")
         player.orderedpizza = True
@@ -748,7 +743,6 @@
           MakeObjectInvisible (telephone)
         }
       ]]></callpizzaplace>
-      <visible type="boolean">false</visible>
       <verb>
         <property>dial</property>
         <pattern>dial</pattern>
@@ -816,6 +810,7 @@
           }
         }
       ]]></setupdiscoball>
+      <usedefaultprefix type="boolean">false</usedefaultprefix>
     </object>
     <exit name="head to bed" alias="head to bed" to="Bedroom 1979">
       <visible type="boolean">false</visible>
@@ -827,8 +822,10 @@
     <descprefix>You are at</descprefix>
     <usedefaultprefix type="boolean">false</usedefaultprefix>
     <firstenter type="script">
-      ClearScreen
     </firstenter>
+    <beforefirstenter type="script">
+      ClearScreen
+    </beforefirstenter>
     <object name="mom_postgrad">
       <inherit name="editor_object" />
       <alias>mom</alias>
@@ -838,6 +835,16 @@
         msg ("Mom: \"Olivia! I can't believe you are finally done with high school!<br/>Did my graduation cap give you good luck like I said it would?\"<br/><br/>You wish you could explain what the cap did without sounding crazy...")
         finish
       ]]></speak>
+    </object>
+    <object name="player">
+      <inherit name="editor_object" />
+      <inherit name="editor_player" />
+      <statusattributes type="stringdictionary" />
+      <attr name="talked_to_mom" type="string"></attr>
+      <orderedpizza type="boolean">false</orderedpizza>
+      <disco type="boolean">false</disco>
+      <attr name="changedtalked_to_mom" type="script">
+      </attr>
     </object>
   </object>
   <verb>
