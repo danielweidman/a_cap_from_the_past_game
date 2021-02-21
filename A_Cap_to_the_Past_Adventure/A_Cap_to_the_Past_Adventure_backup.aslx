@@ -15,11 +15,13 @@
   <object name="Kitchen 2021">
     <inherit name="editor_room" />
     <isroom />
-    <description><![CDATA[The kitchen is spacious, recently remodelled, and fitted with all of the hottest appliances: a stainless steel dishwasher, an "As-seen-on-TV" air fryer, an induction stove, and even a WiFi-connected refrigerator.<br/>There's a small island counter with some tall stools that you eat breakfast at with your parents pretty much every day, and, despite the momentous nature of today, it's no exception.]]></description>
+    <description type="string"></description>
     <alias>Kitchen</alias>
     <descprefix>You are in</descprefix>
-    <firstenter type="script">
-    </firstenter>
+    <exitslistprefix>You can go to</exitslistprefix>
+    <firstenter type="script"><![CDATA[
+      msg ("The kitchen is spacious, recently remodelled, and fitted with all of the hottest appliances: a stainless steel dishwasher, an \"As-seen-on-TV\" air fryer, an induction stove, and even a WiFi-connected refrigerator.<br/>There's a small island counter with some tall stools that you eat breakfast at with your parents pretty much every day, and, despite the momentous nature of today, it's no exception.")
+    ]]></firstenter>
     <object name="mom">
       <inherit name="editor_object" />
       <inherit name="namedfemale" />
@@ -29,7 +31,8 @@
       <description>Wrapped with a bow</description>
       <visible />
       <usedefaultprefix type="boolean">false</usedefaultprefix>
-      <prefix>Terri, your </prefix>
+      <prefix type="string"></prefix>
+      <suffix>(Terri)</suffix>
       <beforeenter type="script">
         =
       </beforeenter>
@@ -38,7 +41,7 @@
       </enter>
       <speak type="script"><![CDATA[
         if (this.visited = False) {
-          msg ("Mom: \"Sweetie, I want you to have this. I know it's old, but I hope you'll make use it just as I did so long ago.\"<br/><br/>Dad: Oh, right before that rager?<br/><br/>Mom: \"Hush now. Disco isn't a thing these days anyway. Olivia wouldn't understand.\"")
+          msg ("Mom: \"Sweetie, I want you to have this. I know it's old, but I hope you'll make use it just as I did so long ago.\"<br/><br/>Dad: Oh, right before that rager?<br/><br/>Mom: \"Hush now. Disco isn't a thing these days anyway. Olivia wouldn't understand.\"<br/><br/>Mom reveals a wrapped gift.")
           MakeObjectVisible (gift)
           ShowRoomDescription
           this.visited = true
@@ -50,6 +53,33 @@
           msg ("Mom: You can take my car to the ceremony. We'll meet you back here when you're done to have a lovely dinner, then you can go hang out with your friends.")
         }
       ]]></speak>
+    </object>
+    <object name="dad">
+      <inherit name="editor_object" />
+      <inherit name="male" />
+      <inventoryverbs type="stringlist" />
+      <displayverbs type="stringlist" />
+      <isroom />
+      <description>Wrapped with a bow</description>
+      <visible />
+      <usedefaultprefix type="boolean">false</usedefaultprefix>
+      <prefix type="string"></prefix>
+      <suffix>(Matt)</suffix>
+      <beforeenter type="script">
+        =
+      </beforeenter>
+      <enter type="script">
+        MakeObjectInvisible
+      </enter>
+      <speak type="script">
+        if (mom.visited = False) {
+          msg ("Dad: \"Good morning! I think your mom has something for you.\"")
+          this.visited = true
+        }
+        else {
+          msg ("You better get a move on. The school said you need to get there two hours early.")
+        }
+      </speak>
     </object>
     <object name="gift">
       <inherit name="editor_object" />
@@ -67,36 +97,10 @@
         msg ("It's an old graduation cap--not that it's really any different from the ones that your school tries to make every student each year.<br/><br/>You: \"Oh, it's...neat.\"<br/><br/>Mom: \"I think you should wear it to the ceremony! Put it on!\"<br/><br/>You: \"Do I have to?\"<br/><br/>Mom: \"Yes. I'm sure all of your friends will think it's so cool.\"<br/><br/>You begrudingly place he hat on your head. Maybe you can take it off later without Terri noticing...")
         create exit ("graduation", Kitchen 2021, Graduation 2021)
         MakeObjectInvisible (gift)
-        msg (FormatExitList("You can go", ScopeExits(), "or", ", "))
+        msg (FormatExitList("You can go to", ScopeExits(), "or", ". "))
       ]]></openit>
       <attr name="_initialise_" type="script">
       </attr>
-    </object>
-    <object name="dad">
-      <inherit name="editor_object" />
-      <inherit name="male" />
-      <inventoryverbs type="stringlist" />
-      <displayverbs type="stringlist" />
-      <isroom />
-      <description>Wrapped with a bow</description>
-      <visible />
-      <usedefaultprefix type="boolean">false</usedefaultprefix>
-      <prefix>Matt, your </prefix>
-      <beforeenter type="script">
-        =
-      </beforeenter>
-      <enter type="script">
-        MakeObjectInvisible
-      </enter>
-      <speak type="script">
-        if (mom.visited = False) {
-          msg ("Dad: \"Good morning! I think your mom has something for you.\"")
-          this.visited = true
-        }
-        else {
-          msg ("You better get a move on. The school said you need to get there two hours early.")
-        }
-      </speak>
     </object>
   </object>
   <verb>
@@ -185,6 +189,7 @@
       <displayverbs type="stringlist">
         <value>Sleep</value>
       </displayverbs>
+      <usedefaultprefix />
       <sleep type="script">
         msg ("You had one too many energy drinks at the party... you should find something to do until you are tired enough to sleep...")
         MakeObjectVisible (Desk)
@@ -284,12 +289,13 @@
     <prefix>the </prefix>
     <descprefix>You are at</descprefix>
     <exitslistprefix>Maybe you should </exitslistprefix>
-    <firstenter type="script"><![CDATA[
-      msg ("It's a warm day. You see all of your classmates hanging around talking.<br/><br/>Trevor: Hey, nice hat!<br/>You: Really?<br/>Trevorl: Yeah, it's like everyone elses, but it doesn't have that shiny, plastic-y look to it.<br/><br/>Maybe you won't try and get rid of it after all...<br/><br/>Principal Garcia: Now, I know you all just want to get the ceremony over with, but your families all want you to look your best. That's why you're gonna need to spend the next two hours rehearsing. Everybody line up by......<br/><br/>Everyone groans and begrudingly follows her directions as she makes them spend the last 120 minutes of their high school careers learing how to stand up and walk across a field.<br/><br/>Eventually parents start showing up, the school band plays \"Land of hope and glory,\" and you, and everyone else, do exactly what Principal Garcia told you to do.<br/><br/>Now comes the part you've been waiting for: the time when everyone flips the tassel on their graduation caps to signify their achievement.")
-    ]]></firstenter>
-    <beforefirstenter type="script">
+    <firstenter type="script">
+      msg ("")
+    </firstenter>
+    <beforefirstenter type="script"><![CDATA[
       ClearScreen
-    </beforefirstenter>
+      msg ("It's a warm day. You see all of your classmates hanging around talking.<br/><br/>Trevor: Hey, nice hat!<br/>You: Really?<br/>Trevorl: Yeah, it's like everyone elses, but it doesn't have that shiny, plastic-y look to it.<br/><br/>Maybe you won't try and get rid of it after all...<br/><br/>Principal Garcia: Now, I know you all just want to get the ceremony over with, but your families all want you to look your best. That's why you're gonna need to spend the next two hours rehearsing. Everybody line up by......<br/><br/>Everyone groans and begrudingly follows her directions as she makes them spend the last 120 minutes of their high school careers learing how to stand up and walk across a field.<br/><br/>Eventually parents start showing up, the school band plays \"Land of hope and glory,\" and you, and everyone else, do exactly what Principal Garcia told you to do.<br/><br/>Now comes the part you've been waiting for: the time when everyone flips the tassel on their graduation caps to signify their achievement.")
+    ]]></beforefirstenter>
     <object name="tassel">
       <inherit name="editor_object" />
       <displayverbs type="stringlist" />
@@ -337,6 +343,16 @@
       <speak type="script"><![CDATA[
         msg ("Trevor: \"I hope you're going to Alex's party tonight.\"<br/>You: \"You bet.\"")
       ]]></speak>
+    </object>
+    <object name="player">
+      <inherit name="editor_object" />
+      <inherit name="editor_player" />
+      <statusattributes type="stringdictionary" />
+      <attr name="talked_to_mom" type="string"></attr>
+      <orderedpizza type="boolean">false</orderedpizza>
+      <disco type="boolean">false</disco>
+      <attr name="changedtalked_to_mom" type="script">
+      </attr>
     </object>
   </object>
   <verb>
@@ -528,16 +544,6 @@
       </speak>
     </object>
     <exit alias="answer the door" to="Filled lliving room 1979" />
-    <object name="player">
-      <inherit name="editor_object" />
-      <inherit name="editor_player" />
-      <statusattributes type="stringdictionary" />
-      <attr name="talked_to_mom" type="string"></attr>
-      <orderedpizza type="boolean">false</orderedpizza>
-      <disco type="boolean">false</disco>
-      <attr name="changedtalked_to_mom" type="script">
-      </attr>
-    </object>
   </object>
   <object name="Filled lliving room 1979">
     <inherit name="editor_room" />
@@ -610,7 +616,7 @@
           msg ("Maggie: \"No offense, but this doesn't really live up to your typical rockin party standards...where's the food? Where's the dancing?\"")
         }
         else if (player.disco = false) {
-          msg ("Maggie: \"You're getting closer... I thought you threw disco parties?\"<br/><br/>You notice a closet where you remember your parents used to store party supplies...")
+          msg ("Maggie: \"You're getting closer... I thought you threw disco parties? There's like a bajillion people here and they all want to dance.\"<br/><br/>You notice a closet where you remember your parents used to store party supplies...")
           MakeObjectVisible (Closet)
           ShowRoomDescription
         }
@@ -677,13 +683,13 @@
       </enter>
       <speak type="script"><![CDATA[
         if (player.orderedpizza = false) {
-          msg ("Stranger: \"So, Brenda, I was talking to that whiny guy behind you Johnny about Spencer, and he told me that Mikayla dumped him because he went to an ABBA concert without her. How petty is that?\"<br/><br/>Brenda: \"I know, Bella, it's not like it was Lipps\"")
+          msg ("Stranger: \"So, Brenda, I was talking to that whiny guy behind you Johnny about Spencer, and he told me that Mikayla dumped him because he went to an ABBA concert without her. How petty is that?\"<br/><br/>Brenda: \"I know, Bella, it's not like it was Lipps\"<br/><br/>Ah, this must be Bella, and that scowling guy must be Johnny")
           guest 2.alias = "Johnny"
           guest 1.alias = "Bella"
           ShowRoomDescription
         }
         else if (player.disco = false) {
-          msg ("Bella: \"This pizza is great, but that George Jr. over there is an poophead. Dominic swears he saw him steal Mikayla's Walkman. Guess what showed up for sale in the classifieds the next day?\"<br/><br/>Brenda: \"The walkman?\"<br/><br/>Bella: \"No, an ad for Georges pizza.\"")
+          msg ("Bella: \"This pizza is great, but that George Jr. over there is an poophead. Dominic swears he saw him steal Mikayla's Walkman. Guess what showed up for sale in the classifieds the next day?\"<br/><br/>Brenda: \"The walkman?\"<br/><br/>Bella: \"No, an ad for Georges pizza.\"<br/><br/>Oh, that's George Jr. in the pizza shirt! That tracks.")
           guest 3.alias = "George Jr."
           ShowRoomDescription
         }
@@ -777,6 +783,7 @@
         msg ("You place your finger in one of the circles and try to turn it just right. How hard can it be to use this thing?<br/><br/>Pretty hard apparently. After a couple attempts though, you here a voice on the other end.<br/><br/>Phone: Hello, how can I connect your call?<br/><br/>Is this one of those \"operator\" people?<br/><br/>You: \"Can you put me through to George's Pizza?\"<br/>")
         order_pizza_function
         player.orderedpizza = true
+        MakeObjectInvisible (telephone)
       ]]></callpizzaplace>
       <verb>
         <property>dial</property>
@@ -839,7 +846,7 @@
         SetTimeout (1) {
           msg ("It starts spinning...")
           SetTimeout (1) {
-            msg ("And the disco has officially begun!")
+            msg ("And the disco has officially begun!<br/><br/>People party all night long. It's a wonderful time. The kind of thing you might tell your children about someday...<br/><br/>Anyway, time flies. You could talk to people before they leave, or just go to bed now.")
             player.disco = true
             MakeExitVisible (head to bed)
             ShowRoomDescription
@@ -899,12 +906,12 @@
     result = "NOT INT"
     get input {
       if (IsInt(result) = true) {
-        msg ("The pizza guy makes a great entrance, carrying "+ result +" large pepporoni pizzas , seemingly lightening the mood a great deal, however something still seems off...<br>You should go see what's wrong...")
+        msg ("The pizza guy makes a great entrance, carrying "+ result +" large pepporoni pizzas , seemingly lightening the mood a great deal, however something still seems off...<br>You should look and see what's wrong...")
         MakeObjectInvisible (telephone)
         ShowRoomDescription
       }
       else {
-        msg ("I just needed a number, but since you're making this too difficult, I'm just gonna send over 5 large pepporonis and you can take it or leave it.<br>The pizza guy makes a great entrance, carrying  5 large pepporoni pizzas , seemingly lightening the mood a great deal, however something still seems off...<br>You should go see what's wrong...")
+        msg ("I just needed a number, but since you're making this too difficult, I'm just gonna send over 5 large pepporonis and you can take it or leave it.<br>The pizza guy makes a great entrance, carrying  5 large pepporoni pizzas , seemingly lightening the mood a great deal, however something still seems off...<br>You should look and see what's wrong...")
         MakeObjectInvisible (telephone)
         ShowRoomDescription
       }
