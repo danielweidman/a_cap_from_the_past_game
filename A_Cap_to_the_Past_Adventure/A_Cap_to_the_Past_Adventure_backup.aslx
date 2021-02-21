@@ -16,6 +16,8 @@
     <description><![CDATA[The kitchen is spacious, recently remodelled, and fitted with all of the hottest appliances: a stainless steel dishwasher, an "As-seen-on-TV" air fryer, an induction stove, and even a WiFi-connected refrigerator.<br/>There's a small island counter with some tall stools that you eat breakfast at with your parents pretty much every day, and, despite the momentous nature of today, it's no exception.]]></description>
     <alias>Kitchen</alias>
     <descprefix>You are in</descprefix>
+    <firstenter type="script">
+    </firstenter>
     <object name="mom">
       <inherit name="editor_object" />
       <inherit name="namedfemale" />
@@ -118,6 +120,8 @@
       <attr name="talked_to_mom" type="string"></attr>
       <attr name="changedtalked_to_mom" type="script">
       </attr>
+      <orderedpizza type="boolean">false</orderedpizza>
+      <disco type="boolean">false</disco>
     </object>
   </object>
   <object name="Bedroom 1979">
@@ -125,6 +129,7 @@
     <alias>Bedroom</alias>
     <description type="string"></description>
     <firstenter type="script">
+      ClearScreen
       msg ("You had an awesome time at the party, now its getting late and it's time for bed... This room is oddly familiar, because as you know your mom used to live in your room when she was younger...")
     </firstenter>
     <object name="game_console">
@@ -285,6 +290,9 @@
     <firstenter type="script"><![CDATA[
       msg ("It's a warm day. You see all of your classmates hanging around talking.<br/><br/>Trevor: Hey, nice hat!<br/>You: Really?<br/>Trevorl: Yeah, it's like everyone elses, but it doesn't have that shiny, plastic-y look to it.<br/><br/>Maybe you won't try and get rid of it after all...<br/><br/>Principal Garcia: Now, I know you all just want to get the ceremony over with, but your families all want you to look your best. That's why you're gonna need to spend the next two hours rehearsing. Everybody line up by......<br/><br/>Everyone groans and begrudingly follows her directions as she makes them spend the last 120 minutes of their high school careers learing how to stand up and walk across a field.<br/><br/>Eventually parents start showing up, the school band plays \"Land of hope and glory,\" and you, and everyone else, do exactly what Prinicipal Garcia told you to do.<br/><br/>Now comes the part you've been waiting for: the time when everyone flips the tassel on their graduation caps to signify their achievement.")
     ]]></firstenter>
+    <beforefirstenter type="script">
+      ClearScreen
+    </beforefirstenter>
     <object name="tassel">
       <inherit name="editor_object" />
       <displayverbs type="stringlist" />
@@ -348,6 +356,9 @@
     <firstenter type="script">
       msg ("There's a weird smell--is it smoking or cigarettes?")
     </firstenter>
+    <beforefirstenter type="script">
+      ClearScreen
+    </beforefirstenter>
     <object name="maggie">
       <inherit name="editor_object" />
       <inherit name="female" />
@@ -486,6 +497,9 @@
     <firstenter type="script"><![CDATA[
       msg ("You enter your kitchen, or what looks a little bit like it anyway. Gone are your smart devices and cooking gadgetry--their place has been taken by an old gas-burning stove and wobbly table.<br/><br/>Maggie: What's going on with you? It seems like you've seen a ghost. Good thing your best friend Maggie is here to help you out. What would you do with out me.<br/><br/>You: I don't know<br/><br/>Maggie:  Well, it sounds like there's someone at the door. You better go open it.")
     ]]></firstenter>
+    <beforefirstenter type="script">
+      ClearScreen
+    </beforefirstenter>
     <object name="maggie at party">
       <inherit name="editor_object" />
       <inherit name="female" />
@@ -543,7 +557,15 @@
         MakeObjectInvisible
       </enter>
       <speak type="script">
-        msg ("Stranger: I wish there was something solid to go with these sugary energy drinks we're all cracking open")
+        if (player.orderedpizza = false) {
+          msg ("Stranger: \"I wish there was something solid to go with these sugary energy drinks we're all cracking open\"")
+        }
+        else if (player.disco = false) {
+          msg ("Stranger: \"This pizza is great... wish there was something else to do though...\"")
+        }
+        else {
+          msg ("Stranger: \"This party is awesome!\"")
+        }
       </speak>
     </object>
     <object name="maggie at party1">
@@ -566,9 +588,19 @@
       <enter type="script">
         MakeObjectInvisible
       </enter>
-      <speak type="script">
-        msg ("Maggie: No offense, but this doesn't really live up to your typical rockin party standards...where's the food? Where's the dancing?")
-      </speak>
+      <speak type="script"><![CDATA[
+        if (player.orderedpizza = false) {
+          msg ("Maggie: \"No offense, but this doesn't really live up to your typical rockin party standards...where's the food? Where's the dancing?\"")
+        }
+        else if (player.disco = false) {
+          msg ("Maggie: \"You're getting closer... I thought you threw disco parties?\"<br/><br/>You notice a closet where you remember your parents used to store party supplies...")
+          MakeObjectVisible (Closet)
+          ShowRoomDescription
+        }
+        else {
+          msg ("Maggie: \"This is more like it! ")
+        }
+      ]]></speak>
     </object>
     <object name="guest 1">
       <inherit name="editor_object" />
@@ -591,7 +623,15 @@
         MakeObjectInvisible
       </enter>
       <speak type="script">
-        msg ("Stranger: I'm hungry. I thought there would be snacks?")
+        if (player.orderedpizza = false) {
+          msg ("Stranger: \"I'm hungry. I thought there would be snacks?\"")
+        }
+        else if (player.disco = false) {
+          msg ("Stranger: \"I wish there were pretty lights\"")
+        }
+        else {
+          msg ("Stranger: \"Wow! Awesome lights girl!\"")
+        }
       </speak>
     </object>
     <object name="guest 2">
@@ -616,6 +656,15 @@
       </enter>
       <speak type="script"><![CDATA[
         msg ("Stranger: So I was talking to Johnny about Spencer, and he told me that Mikayla dumped him because he went to an Abba concert without her. How petty is that?<br/>Another stranger: I know, it's not like it was Lipps")
+        if (player.orderedpizza = false) {
+          msg ("Stranger: \"So I was talking to Johnny about Spencer, and he told me that Mikayla dumped him because he went to an ABBA concert without her. How petty is that?\"<br/><br/>Another stranger: \"I know, it's not like it was Lipps\"")
+        }
+        else if (player.disco = false) {
+          msg ("Stranger: \"This pizza is great, but that George Jr. over there is an poophead. Dominic swears he saw him steal Mikayla's Walkman. Guess what showed up for sale in the classifieds the next day?\"<br/><br/>Another stranger: \"The walkman?\"<br/><br/>Stranger: \"No, an ad for Georges pizza.\"")
+        }
+        else {
+          msg ("Stranger: \"Hey, do you see the way that Johnny is looking at me? Should I ask him to dance?\"<br/><br/>Another stranger: \"What about him and Mikayla?\"<br/><br/>Stranger: \"Who cares.\"")
+        }
       ]]></speak>
     </object>
     <object name="guest 3">
@@ -639,7 +688,15 @@
         MakeObjectInvisible
       </enter>
       <speak type="script"><![CDATA[
-        msg ("Stranger: Hey, do you even know who's hosting this? You should tell them to order pizza or something.<br/>You: Haha...I'll let her know")
+        if (player.orderedpizza = false) {
+          msg ("Stranger: \"Hey, do you even know who's hosting this? You should tell them to order pizza or something.\"<br/><br/>You: \"Haha...I'll let her know\"")
+        }
+        else if (player.disco = false) {
+          msg ("Stranger: \"Pizza's okay I guess... still boring\"<br/><br/>You: \"Yeah who knows...\"")
+        }
+        else {
+          msg ("Stranger: \"I've been to better parties.\"<br/><br/>You: \"What else would you change???\"<br/><br/>Stranger: \"I dunno...\"<br/><br/>You: \"...\"")
+        }
       ]]></speak>
     </object>
     <object name="guest 4">
@@ -662,9 +719,17 @@
       <enter type="script">
         MakeObjectInvisible
       </enter>
-      <speak type="script">
-        msg ("Stranger: Boy, my stomach is empty after 3 hours sitting around.")
-      </speak>
+      <speak type="script"><![CDATA[
+        if (player.orderedpizza = false) {
+          msg ("Stranger: \"Boy, my stomach is empty after 3 hours sitting around. Could we order George's Pizza?\"<br/><br/>You notice the old rotary phone in the corner...")
+          this.visited = True
+          MakeObjectVisible (telephone)
+          ShowRoomDescription
+        }
+        else {
+          msg ("Stranger: \"Wow I really love George's Pizza\"<br/><br/>You notice this guy seems really into George's pizza... He seems familiar and you think he may run the 2021 George's Pizza place in 2021...")
+        }
+      ]]></speak>
     </object>
     <object name="telephone">
       <inherit name="editor_object" />
@@ -676,34 +741,123 @@
       </displayverbs>
       <inventoryverbs type="stringlist" />
       <callpizzaplace type="script"><![CDATA[
-        msg ("You place your finger in one of the circles and try to turn it just right. How hard can it be to use this thing?<br/><br/>Pretty hard apparently. After a couple attempts though, you here a voice on the other end.<br/><br/>Phone: Hello, how can I connect your call?<br/><br/>Is this one of those \"operator\" people?")
+        msg ("You place your finger in one of the circles and try to turn it just right. How hard can it be to use this thing?<br/><br/>Pretty hard apparently. After a couple attempts though, you here a voice on the other end.<br/><br/>Phone: Hello, how can I connect your call?<br/><br/>Is this one of those \"operator\" people?<br/><br/>You: \"Can you put me through to George's Pizza?\"<br/><br/>The operator connects you to the pizza place and you order 3 Large pepperoni pizzas...")
+        player.orderedpizza = True
+        SetTimeout (2) {
+          msg ("<br/>Some time passes... <br/><br/>The pizza guy makes a great entrance, seemingly lightening the mood a great deal, however something still seems off... You should go see what's wrong...")
+          MakeObjectInvisible (telephone)
+        }
       ]]></callpizzaplace>
+      <visible type="boolean">false</visible>
       <verb>
         <property>dial</property>
         <pattern>dial</pattern>
         <defaultexpression>"You can't dial " + object.article + "."</defaultexpression>
       </verb>
-      <verb>
-        <property>callpizzaplace</property>
-        <pattern>call pizza place</pattern>
-        <defaultexpression>"You can't call pizza place " + object.article + "."</defaultexpression>
-      </verb>
     </object>
+    <object name="Closet">
+      <inherit name="editor_object" />
+      <inherit name="container_open" />
+      <attr name="feature_container" type="boolean">false</attr>
+      <close type="boolean">false</close>
+      <hidechildren />
+      <listchildren />
+      <listchildrenprefix>It contains</listchildrenprefix>
+      <displayverbs type="stringlist">
+        <value>Look in</value>
+      </displayverbs>
+      <visible type="boolean">false</visible>
+      <lookin type="script">
+        if (Closet.visited = false) {
+          msg ("You notice a disco ball in the closet... maybe this would help liven up the party")
+          this.visited = true
+          MakeObjectVisible (disco ball)
+          ShowRoomDescription
+        }
+        else {
+          msg ("You don't see anything else interesting in the closet...")
+        }
+      </lookin>
+    </object>
+    <object name="disco ball">
+      <inherit name="editor_object" />
+      <visible type="boolean">false</visible>
+      <alias>Disco Ball</alias>
+      <look>This is a retro disco ball, go plug it in!</look>
+      <take />
+      <inventoryverbs type="stringlist">
+        <value>Look at</value>
+      </inventoryverbs>
+      <takemsg>You grab the disco ball... you notice a high outlet and some tape on the counter nearby...</takemsg>
+      <not_all />
+      <drop type="boolean">false</drop>
+      <ontake type="script">
+        MakeObjectVisible (disco location)
+        ShowRoomDescription
+      </ontake>
+    </object>
+    <object name="disco location">
+      <inherit name="editor_object" />
+      <visible type="boolean">false</visible>
+      <alias>setup disco ball</alias>
+      <displayverbs type="stringlist" />
+      <look>This seems like a perfect spot to setup your disco ball...</look>
+      <setupdiscoball type="script"><![CDATA[
+        RemoveObject (disco ball)
+        msg ("You setup the disco ball and turn it on...<br/>")
+        SetTimeout (1) {
+          msg ("It starts spinning...")
+          SetTimeout (1) {
+            msg ("And the disco has officially begun!")
+            player.disco = true
+            MakeExitVisible (head to bed)
+            ShowRoomDescription
+            MakeObjectInvisible (disco location)
+          }
+        }
+      ]]></setupdiscoball>
+    </object>
+    <exit name="head to bed" alias="head to bed" to="Bedroom 1979">
+      <visible type="boolean">false</visible>
+    </exit>
   </object>
   <object name="Graduation 2021 post game">
     <inherit name="editor_room" />
     <alias>Graduation</alias>
     <descprefix>You are at</descprefix>
     <usedefaultprefix type="boolean">false</usedefaultprefix>
+    <firstenter type="script">
+      ClearScreen
+    </firstenter>
     <object name="mom_postgrad">
       <inherit name="editor_object" />
       <alias>mom</alias>
       <displayverbs type="stringlist" />
       <usedefaultprefix type="boolean">false</usedefaultprefix>
       <speak type="script"><![CDATA[
-        msg ("Mom: \"Terri! I can't believe you are finally done with high school!<br/>Did my graduation cap give you good luck like I said it would?\"<br/><br/>You wish you could explain what the cap did without sounding crazy...")
+        msg ("Mom: \"Olivia! I can't believe you are finally done with high school!<br/>Did my graduation cap give you good luck like I said it would?\"<br/><br/>You wish you could explain what the cap did without sounding crazy...")
         finish
       ]]></speak>
     </object>
   </object>
+  <verb>
+    <property>capital</property>
+    <pattern>capital</pattern>
+    <defaultexpression>"You can't capital " + object.article + "."</defaultexpression>
+  </verb>
+  <verb>
+    <property>callpizzaplace</property>
+    <pattern>call pizza place</pattern>
+    <defaultexpression>"You can't call pizza place " + object.article + "."</defaultexpression>
+  </verb>
+  <verb>
+    <property>lookin</property>
+    <pattern>look in</pattern>
+    <defaultexpression>"You can't look in " + object.article + "."</defaultexpression>
+  </verb>
+  <verb>
+    <property>setupdiscoball</property>
+    <pattern>setup disco ball</pattern>
+    <defaultexpression>"You can't setup disco ball " + object.article + "."</defaultexpression>
+  </verb>
 </asl>
